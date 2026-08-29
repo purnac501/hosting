@@ -14,9 +14,9 @@
 
 backend:
   name: github
-  repo: OWNER/REPOSITORY                                # ← REPLACE with "your-github-username/repository-name"
+  repo: purnac501/hosting
   branch: main
-  base_url: https://REPLACE-WITH-AUTH-WORKER.workers.dev # ← REPLACE with your deployed Worker URL (no /callback)
+  base_url: https://sveltia-cms-auth.purnac501.workers.dev
   auth_methods: [oauth]                                 # production login = GitHub OAuth only
 
 # Images uploaded through the CMS are committed to assets/uploads/
@@ -31,7 +31,7 @@ public_folder: /assets/uploads
 slug:
   timezone: local
 
-site_url: https://OWNER.github.io/REPOSITORY            # ← REPLACE with the final public site URL (optional, enables the "View site" link)
+site_url: https://purnac501.github.io/hosting
 
 collections:
   - name: posts
