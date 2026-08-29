@@ -20,12 +20,12 @@ email: # optional - used by jekyll-feed only if set
 # If the site is on a custom domain (https://example.com/) or is a
 # user/organization site (https://OWNER.github.io/) leave it "".
 # ------------------------------------------------------------------
-baseurl: "/host"
+baseurl: "/hosting"
 
 # Used to build absolute URLs (RSS feed links, og:metadata).
 # Set to your final public URL, e.g. "https://OWNER.github.io/REPOSITORY"
 # or "https://example.com" (no trailing slash). Leave "" for local dev.
-url: "https://purnac501.github.io/host"
+url: "https://purnac501.github.io/hosting"
 
 # Post URLs: /2026/08/28/post-title/
 permalink: /:year/:month/:day/:title/
