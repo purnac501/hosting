@@ -317,6 +317,24 @@
     navigator.serviceWorker.register('sw.js').catch(function () {
       // No SW is fine (http:// local dev, old browsers).
     });
+  // --- Dark Mode Toggle ---
+  var themeToggleBtn = document.getElementById('theme-toggle');
+  var themeIcon = document.getElementById('theme-icon');
+
+  function updateThemeUI() {
+    var isDark = document.documentElement.classList.contains('dark-theme');
+    if (themeIcon) {
+      themeIcon.textContent = isDark ? '☀️' : '🌙';
+    }
+  }
+
+  if (themeToggleBtn) {
+    updateThemeUI();
+    themeToggleBtn.addEventListener('click', function () {
+      var isDark = document.documentElement.classList.toggle('dark-theme');
+      localStorage.setItem('piggii_theme', isDark ? 'dark' : 'light');
+      updateThemeUI();
+    });
   }
 
 })();
