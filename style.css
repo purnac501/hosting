@@ -1,356 +1,514 @@
+/* ============================================================
+   Retro Old-School Weblog x Discord Dark Aesthetic
+   ============================================================ */
+
 /* === RESET & BASE === */
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  color: #333;
-  background-color: #cfc3a1;
-  /* Phones: stop iOS auto-inflating text, kill the gray tap flash */
+  line-height: 1.6;
+  color: #dbdee1;
+  background-color: #1e1f22;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(88, 101, 242, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(87, 242, 135, 0.05) 0%, transparent 40%);
+  min-height: 100vh;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(74, 55, 40, 0.15);
+  -webkit-tap-highlight-color: rgba(88, 101, 242, 0.2);
 }
 
-/* === LAYOUT === */
+/* === MAIN CONTAINER === */
 #container {
-  width: 780px;
-  margin: 20px auto;
-  background: #f5f0e1;
-  border: 2px solid #b8a88a;
-  border-top: none;
-  box-shadow: 4px 4px 0 #8b7d64;
+  width: 820px;
+  margin: 24px auto;
+  background: #313338;
+  border: 1px solid #383a40;
+  border-top: 3px solid #5865F2;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
 }
 
 /* === HEADER === */
 #header {
-  background: #e8dcc8;
-  border-bottom: 3px solid #b8a88a;
-  padding: 25px 25px 15px;
+  background: #2b2d31;
+  border-bottom: 1px solid #383a40;
+  padding: 24px 20px 14px;
   text-align: center;
+  position: relative;
 }
 
 #header h1 {
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  font-size: 30px;
-  color: #4a3728;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 0 #d4c9a8;
+  font-family: "gg sans", "Segoe UI", Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #f2f3f5;
+  letter-spacing: 1px;
 }
 
 #header .highlight {
-  color: #c0392b;
-  font-style: italic;
+  color: #5865F2;
+  text-shadow: 0 0 12px rgba(88, 101, 242, 0.5);
 }
 
 #tagline {
   margin-top: 8px;
   font-size: 12px;
-  color: #7a6a52;
-  font-style: italic;
+  color: #949ba4;
+  font-family: "Consolas", "Courier New", monospace;
+  background: #1e1f22;
+  padding: 4px 12px;
+  border-radius: 4px;
+  display: inline-block;
+  max-width: 90%;
+  border: 1px solid #383a40;
 }
 
-/* === NAV === */
+/* === NAVIGATION === */
 #nav {
-  background: #4a3728;
-  padding: 8px 20px;
+  background: #1e1f22;
+  padding: 8px 16px;
   text-align: center;
-  font-family: "Trebuchet MS", Arial, sans-serif;
   font-size: 13px;
-  border-bottom: 2px solid #b8a88a;
+  border-bottom: 1px solid #383a40;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 #nav a {
-  color: #f5f0e1;
+  color: #949ba4;
   text-decoration: none;
-  padding: 0 8px;
-  font-weight: bold;
-  /* Comfortable tap targets on touch screens */
+  padding: 4px 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
   touch-action: manipulation;
 }
 
-#nav a:hover {
-  color: #e8b84a;
-  text-decoration: underline;
+#nav a::before {
+  content: "#";
+  margin-right: 3px;
+  color: #5865F2;
+  font-weight: bold;
 }
 
-/* === CONTENT === */
+#nav a:hover {
+  color: #f2f3f5;
+  background: #35373c;
+}
+
+#nav a.active {
+  color: #ffffff;
+  background: #5865F2;
+}
+
+#nav a.active::before {
+  color: #ffffff;
+}
+
+/* === CONTENT AREA === */
 #content-area {
-  padding: 15px 20px;
+  padding: 20px;
+}
+
+#content-area::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 #main {
   float: left;
-  width: 520px;
+  width: 540px;
 }
 
-/* Full-width mode: posts and other pages without the sidebar */
+/* Full-width mode: single post / page without sidebar */
 #content-area.nosidebar #main {
   float: none;
-  width: auto;
-  max-width: 700px;
+  width: 100%;
+  max-width: 740px;
   margin: 0 auto;
 }
 
 #sidebar {
   float: right;
-  width: 200px;
+  width: 220px;
 }
-
-
 
 /* === POSTS === */
 .post {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px dashed #b8a88a;
+  background: #2b2d31;
+  border: 1px solid #383a40;
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  transition: border-color 0.2s ease;
+}
+
+.post:hover {
+  border-color: #4e5058;
 }
 
 .post h2 {
-  font-family: "Trebuchet MS", Arial, sans-serif;
   font-size: 20px;
-  color: #4a3728;
-  margin-bottom: 4px;
+  font-weight: 700;
+  color: #f2f3f5;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.post h2 a {
+  color: #f2f3f5;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.post h2 a:hover {
+  color: #00a8fc;
+  text-decoration: underline;
 }
 
 .post-meta {
-  font-size: 11px;
-  color: #8b7d64;
-  margin-bottom: 12px;
-  border-bottom: 1px dotted #d4c9a8;
-  padding-bottom: 6px;
+  font-size: 12px;
+  color: #949ba4;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #383a40;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.post-meta b {
+  color: #5865F2;
+  background: rgba(88, 101, 242, 0.12);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 .post-meta a {
-  color: #8b7d64;
+  color: #949ba4;
+  text-decoration: none;
+}
+
+.post-meta a:hover {
+  color: #5865F2;
 }
 
 .post p {
-  margin-bottom: 10px;
-  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #dbdee1;
 }
 
-.post ul {
-  margin: 8px 0 8px 25px;
-  line-height: 1.8;
+.post ul, .post ol {
+  margin: 8px 0 12px 24px;
+  color: #dbdee1;
 }
 
-/* === POST THUMBNAIL === */
+.post li {
+  margin-bottom: 4px;
+}
+
+/* === POST THUMBNAIL (Discord Embed Style) === */
 .post-thumbnail {
-  margin: 12px 0 16px;
+  margin: 14px 0 16px;
   text-align: center;
-}
-
-.post-thumbnail img {
-  max-width: 100%;
-  max-height: 420px;
-  object-fit: cover;
-  border: 1px solid #b8a88a;
-  padding: 4px;
-  background: #ffffff;
-  box-shadow: 2px 2px 0 rgba(139, 125, 100, 0.25);
-  display: inline-block;
 }
 
 .post-thumbnail a {
   display: inline-block;
 }
 
+.post-thumbnail img {
+  max-width: 100%;
+  max-height: 380px;
+  border-radius: 6px;
+  border: 1px solid #383a40;
+  background: #1e1f22;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  object-fit: cover;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.post-thumbnail a:hover img {
+  border-color: #5865F2;
+  transform: translateY(-2px);
+}
+
+/* === POST EXTRAS: RICH PRESENCE / MOOD === */
+.post-now {
+  font-size: 12px;
+  color: #dbdee1;
+  background: #1e1f22;
+  border: 1px solid #383a40;
+  border-left: 3px solid #57F287;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  font-family: "Consolas", "Courier New", monospace;
+}
+
+.post-now b {
+  color: #57F287;
+}
+
+.post-tags {
+  font-size: 11px;
+  color: #949ba4;
+  margin-top: 12px;
+}
+
+.post-tags .tag {
+  background: #1e1f22;
+  border: 1px solid #383a40;
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: #5865F2;
+  margin-right: 4px;
+  font-weight: 500;
+}
+
+.read-more {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.read-more a {
+  color: #00a8fc;
+  text-decoration: none;
+}
+
+.read-more a:hover {
+  text-decoration: underline;
+}
+
+.read-more img {
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
 .signature {
-  margin-top: 15px;
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px dashed #383a40;
   text-align: right;
   font-style: italic;
-  color: #7a6a52;
+  color: #949ba4;
+  font-size: 12px;
 }
 
-.signature img {
-  vertical-align: middle;
-  margin-top: 4px;
-}
-
-.centered {
+#post-nav {
+  font-size: 13px;
+  color: #949ba4;
+  margin-bottom: 24px;
   text-align: center;
+  background: #2b2d31;
+  border: 1px solid #383a40;
+  border-radius: 6px;
+  padding: 12px;
 }
 
-/* === POST CONTENT: TABLES === */
-.post-body table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
-  font-size: 13px;
+#post-nav a {
+  color: #00a8fc;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.post-body th {
-  background: #4a3728;
-  color: #f5f0e1;
-  padding: 6px 10px;
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  font-size: 12px;
-  text-align: left;
+#post-nav a:hover {
+  text-decoration: underline;
 }
 
-.post-body td {
-  padding: 7px 10px;
-  border-bottom: 1px solid #d4c9a8;
-  vertical-align: top;
-}
-
-.post-body tr:nth-child(even) td {
-  background: #eee7d6;
-}
-
-/* === POST CONTENT: QUOTES === */
+/* === POST CONTENT: QUOTES & CODE === */
 .post-body blockquote {
-  margin-bottom: 18px;
-  padding: 10px 12px;
-  background: #eee7d6;
-  border-left: 4px solid #b8a88a;
-  font-size: 13px;
-  font-style: italic;
+  margin: 12px 0 16px;
+  padding: 8px 12px;
+  background: #232428;
+  border-left: 4px solid #4e5058;
+  border-radius: 0 4px 4px 0;
+  color: #949ba4;
+  font-style: normal;
 }
 
-/* === POST CONTENT: CODE === */
 .post-body code {
-  background: #eee7d6;
-  border: 1px dotted #b8a88a;
-  padding: 0 3px;
-  font-family: "Courier New", Courier, monospace;
+  background: #1e1f22;
+  border: 1px solid #383a40;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: "Consolas", "Courier New", monospace;
   font-size: 12px;
+  color: #f2f3f5;
 }
 
 .post-body pre {
-  background: #eee7d6;
-  border: 1px solid #d4c9a8;
-  padding: 8px;
+  background: #1e1f22;
+  border: 1px solid #383a40;
+  border-radius: 6px;
+  padding: 12px;
   overflow-x: auto;
-  margin-bottom: 10px;
+  margin: 12px 0;
 }
 
 .post-body pre code {
   border: none;
   padding: 0;
+  background: none;
 }
 
-/* === POST CONTENT: IMAGES === */
-.post-body img {
-  max-width: 100%;
-}
-
-/* === POST EXTRAS === */
-.post-now {
-  font-size: 12px;
-  color: #7a6a52;
-  font-style: italic;
-  background: #eee7d6;
-  border: 1px dotted #b8a88a;
-  padding: 5px 8px;
-  margin-bottom: 12px;
-}
-
-.post-tags {
-  font-size: 11px;
-  color: #8b7d64;
-}
-
-.post-tags .tag {
-  background: #e8dcc8;
-  border: 1px solid #b8a88a;
-  padding: 0 4px;
-  color: #4a3728;
-}
-
-.read-more {
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
   font-size: 13px;
 }
 
-#post-nav {
-  font-size: 12px;
-  color: #8b7d64;
-  margin-bottom: 30px;
-  text-align: center;
+.post-body th {
+  background: #1e1f22;
+  color: #f2f3f5;
+  padding: 8px 12px;
+  border: 1px solid #383a40;
+  text-align: left;
+}
+
+.post-body td {
+  padding: 8px 12px;
+  border: 1px solid #383a40;
+  background: #2b2d31;
+}
+
+.post-body tr:nth-child(even) td {
+  background: #232428;
 }
 
 /* === ARCHIVE === */
 .archive-year {
-  font-family: "Trebuchet MS", Arial, sans-serif;
   font-size: 18px;
-  color: #c0392b;
-  border-bottom: 2px solid #b8a88a;
-  margin: 15px 0 8px;
+  font-weight: 700;
+  color: #5865F2;
+  border-bottom: 1px solid #383a40;
+  margin: 18px 0 10px;
+  padding-bottom: 4px;
 }
 
 .archive-month {
-  font-family: "Trebuchet MS", Arial, sans-serif;
   font-size: 14px;
-  color: #4a3728;
-  margin: 10px 0 4px;
+  font-weight: 600;
+  color: #f2f3f5;
+  margin: 12px 0 6px;
 }
 
 .archive-list {
-  margin: 4px 0 10px 25px;
+  margin: 6px 0 14px 24px;
   line-height: 1.8;
   font-size: 13px;
 }
 
-.archive-list small {
-  color: #8b7d64;
+.archive-list a {
+  color: #00a8fc;
+  text-decoration: none;
 }
 
-/* === SIDEBAR === */
+.archive-list a:hover {
+  text-decoration: underline;
+}
+
+.archive-list small {
+  color: #949ba4;
+}
+
+/* === SIDEBAR (Discord Channel Cards) === */
 .sidebox {
-  background: #eee7d6;
-  border: 1px solid #d4c9a8;
-  padding: 10px;
-  margin-bottom: 15px;
+  background: #2b2d31;
+  border: 1px solid #383a40;
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 18px;
   font-size: 12px;
 }
 
 .sidebox h3 {
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  font-size: 13px;
-  color: #4a3728;
-  border-bottom: 1px solid #d4c9a8;
-  padding-bottom: 4px;
-  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #949ba4;
+  border-bottom: 1px solid #383a40;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .sidebox p {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   line-height: 1.5;
+  color: #dbdee1;
 }
 
 .sidebox ul {
-  margin-left: 15px;
-  line-height: 1.8;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebox li {
+  margin-bottom: 4px;
 }
 
 .sidebox a {
-  color: #4a3728;
+  color: #949ba4;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: block;
+  transition: all 0.15s ease;
+}
+
+.sidebox a::before {
+  content: "#";
+  margin-right: 4px;
+  color: #5865F2;
+  font-weight: bold;
 }
 
 .sidebox a:hover {
-  color: #c0392b;
+  color: #f2f3f5;
+  background: #35373c;
 }
 
-/* === PLAYER === */
+/* === RETRO MUSIC PLAYER (Discord Spotify Vibe) === */
 #player-controls {
   text-align: center;
-  margin: 6px 0;
+  margin: 8px 0;
 }
 
 #player-controls button {
-  background: none;
-  border: none;
+  background: #1e1f22;
+  border: 1px solid #383a40;
+  border-radius: 4px;
   cursor: pointer;
-  padding: 2px;
+  padding: 4px 8px;
+  margin: 0 2px;
   vertical-align: middle;
+  transition: background 0.15s ease;
 }
 
 #player-controls button:hover {
-  opacity: 0.7;
+  background: #35373c;
+  border-color: #5865F2;
 }
 
 #player-controls button:disabled {
@@ -359,76 +517,88 @@ body {
 }
 
 #player-track-name {
-  font-weight: bold;
-  font-size: 11px;
+  font-weight: 700;
+  font-size: 12px;
   text-align: center;
-  margin: 4px 0 2px;
-  color: #4a3728;
+  margin: 6px 0 2px;
+  color: #f2f3f5;
 }
 
 #player-track-artist {
   font-size: 10px;
   text-align: center;
-  margin: 0 0 6px;
-  color: #7a6a52;
+  margin: 0 0 8px;
+  color: #57F287;
+  font-family: "Consolas", monospace;
 }
 
 #player-progress {
   width: 100%;
-  height: 4px;
-  background: #d4c9a8;
+  height: 6px;
+  background: #1e1f22;
+  border-radius: 3px;
   cursor: pointer;
-  margin: 4px 0;
+  margin: 6px 0;
+  overflow: hidden;
 }
 
 #player-progress-bar {
   height: 100%;
   width: 0%;
-  background: #8b7d64;
+  background: #5865F2;
+  border-radius: 3px;
+  transition: width 0.1s linear;
 }
 
 .player-time {
   font-size: 10px;
-  color: #8b7d64;
+  color: #949ba4;
   text-align: center;
+  font-family: "Consolas", monospace;
 }
 
 .player-volume-wrap {
   text-align: center;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
-.player-volume-wrap input[type="range"] {
-  width: 100px;
+.player-volume-wrap input[type=range] {
+  width: 110px;
+  accent-color: #5865F2;
   vertical-align: middle;
 }
 
-/* === TRACK LIST === */
 #track-list {
   list-style: none;
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   padding: 0;
-  font-size: 10px;
-  max-height: 160px;
+  font-size: 11px;
+  max-height: 150px;
   overflow-y: auto;
+  background: #1e1f22;
+  border: 1px solid #383a40;
+  border-radius: 4px;
 }
 
 #track-list li {
-  padding: 2px 4px;
+  padding: 4px 6px;
   cursor: pointer;
-  border-bottom: 1px dotted #d4c9a8;
+  border-bottom: 1px solid #2b2d31;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #949ba4;
 }
 
 #track-list li:hover {
-  background: #e8dcc8;
+  background: #2b2d31;
+  color: #f2f3f5;
 }
 
 #track-list li.active {
-  background: #d4c9a8;
-  font-weight: bold;
+  background: #35373c;
+  color: #5865F2;
+  font-weight: 700;
 }
 
 /* === FOOTER === */
@@ -438,33 +608,42 @@ body {
 }
 
 #footer-nav a {
-  color: #8b7d64;
+  color: #949ba4;
   font-size: 12px;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+#footer-nav a:hover {
+  color: #5865F2;
 }
 
 #footer {
-  padding: 15px 20px;
+  background: #2b2d31;
+  border-top: 1px solid #383a40;
+  padding: 20px;
   text-align: center;
   font-size: 11px;
-  color: #7a6a52;
+  color: #949ba4;
 }
 
 #footer hr {
   border: none;
-  border-top: 3px double #b8a88a;
-  margin-bottom: 10px;
+  border-top: 1px solid #383a40;
+  margin-bottom: 14px;
 }
 
 #footer p {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 #footer img {
   vertical-align: middle;
-  margin: 2px;
+  margin: 3px;
+  border-radius: 2px;
 }
 
-/* === ENTER GATE (splash screen) === */
+/* === ENTER GATE (SPLASH SCREEN) === */
 #enter-gate {
   position: fixed;
   top: 0;
@@ -472,7 +651,8 @@ body {
   right: 0;
   bottom: 0;
   z-index: 9999;
-  background: #cfc3a1;
+  background: rgba(18, 19, 22, 0.95);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -480,7 +660,7 @@ body {
   cursor: pointer;
   padding: 20px;
   opacity: 1;
-  transition: opacity 0.4s;
+  transition: opacity 0.35s ease;
 }
 
 #enter-gate.gate-leave {
@@ -489,161 +669,158 @@ body {
 }
 
 #enter-gate .gate-box {
-  background: #f5f0e1;
-  border: 3px solid #4a3728;
-  box-shadow: 4px 4px 0 #8b7d64;
-  padding: 30px 40px;
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  color: #4a3728;
-  max-width: 340px;
+  background: #313338;
+  border: 1px solid #383a40;
+  border-top: 3px solid #5865F2;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  padding: 36px 44px;
+  font-family: "gg sans", Arial, sans-serif;
+  color: #f2f3f5;
+  max-width: 380px;
 }
 
 #enter-gate .gate-box img {
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 #enter-gate h2 {
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 800;
   margin-bottom: 14px;
+  color: #f2f3f5;
 }
 
 #enter-gate .gate-enter {
   font-size: 16px;
-  font-weight: bold;
-  color: #c0392b;
+  font-weight: 700;
+  color: #5865F2;
   margin-bottom: 12px;
+  letter-spacing: 1px;
 }
 
 #enter-gate small {
-  color: #7a6a52;
-  font-family: Georgia, serif;
+  color: #949ba4;
+  font-size: 12px;
 }
 
-/* === BLINK (CSS version since <blink> is dead) === */
+/* === BLINK & UTILS === */
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50% { opacity: 0.2; }
 }
 
 .blink {
-  animation: blink 1s step-end infinite;
-}
-
-/* === MISC === */
-hr {
-  border: none;
-  border-top: 2px dashed #b8a88a;
-  margin: 15px 0;
+  animation: blink 1.2s step-end infinite;
 }
 
 a {
-  color: #4a3728;
+  color: #00a8fc;
+  text-decoration: none;
 }
 
 a:hover {
-  color: #c0392b;
+  text-decoration: underline;
 }
 
-/* === NAV ACTIVE STATE === */
-#nav a.active {
-  color: #e8b84a;
-  text-decoration: underline;
+.centered {
+  text-align: center;
+}
+
+.archive-link {
+  margin-top: 20px;
+  color: #949ba4;
+  font-size: 13px;
+}
+
+.archive-link a {
+  color: #5865F2;
+  font-weight: 600;
 }
 
 /* === FOOTER ADMIN LINK === */
 .admin-link {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .admin-link a {
-  color: #b8a88a;
+  color: #4e5058;
   font-size: 10px;
   text-decoration: none;
 }
 
 .admin-link a:hover {
-  color: #c0392b;
+  color: #5865F2;
   text-decoration: underline;
 }
 
-/* === POST CONTENT: EMOTES === */
+/* === EMOTICONS === */
 .post-body img.emote,
 .post img.emote {
   display: inline;
   vertical-align: middle;
   border: none;
-  margin: 0 1px;
+  margin: 0 2px;
 }
 
-/* === SMALL SCREENS ===
-   Stack the sidebar below the content, keep the page width fluid,
-   and enlarge touch targets (fingers, not mouse pointers). */
-@media (max-width: 800px) {
+/* === RESPONSIVE / MOBILE SCREENS === */
+@media (max-width: 840px) {
   #container {
-    width: auto;
+    width: 100%;
     margin: 0;
     border-left: none;
     border-right: none;
+    border-radius: 0;
     box-shadow: none;
   }
 
   #header {
-    padding: 18px 14px 12px;
+    padding: 20px 16px 12px;
   }
 
   #header h1 {
-    font-size: 21px;
-    letter-spacing: 1px;
+    font-size: 22px;
   }
 
   #nav {
-    padding: 4px 8px;
-    line-height: 2.4;
+    padding: 6px 8px;
+    gap: 6px;
   }
 
   #nav a {
-    padding: 6px 8px;
+    padding: 6px 10px;
   }
 
   #content-area {
-    padding: 12px 12px;
+    padding: 14px;
   }
 
   #main {
     float: none;
-    width: auto;
-  }
-
-  .post h2 {
-    font-size: 18px;
+    width: 100%;
   }
 
   #sidebar {
     float: none;
-    width: auto;
+    width: 100%;
+    margin-top: 20px;
   }
 
-  /* Music player: big thumbs-friendly buttons and wider slider */
   #player-controls button {
-    padding: 10px;
+    padding: 8px 12px;
   }
 
   #player-controls button img {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
 
   #track-list li {
     padding: 8px 6px;
   }
 
-  .player-volume-wrap input[type="range"] {
-    width: 150px;
-    height: 28px;
-  }
-
-  #footer img[width="50"] {
-    width: 40px;
-    height: 40px;
+  .player-volume-wrap input[type=range] {
+    width: 140px;
+    height: 24px;
   }
 }
