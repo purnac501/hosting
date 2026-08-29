@@ -63,7 +63,8 @@
 }
 
 /* === EXPLICIT DARK MODE CLASS === */
-html.dark-theme {
+html.dark-theme,
+html.dark-theme body {
   --bg: #121214;
   --bg-subtle: #18181b;
   --surface: #1e1e22;
@@ -92,7 +93,8 @@ html.dark-theme {
 }
 
 /* === EXPLICIT LIGHT MODE CLASS === */
-html.light-theme {
+html.light-theme,
+html.light-theme body {
   --bg: #ffffff;
   --bg-subtle: #fafafa;
   --surface: #ffffff;

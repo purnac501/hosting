@@ -14,16 +14,52 @@
   <meta name="site-base" content="{{ '' | relative_url }}">
   
   <script>
-    (function() {
-      var saved = localStorage.getItem('piggii_theme');
-      if (saved === 'dark') {
-        document.documentElement.classList.add('dark-theme');
-      } else if (saved === 'light') {
-        document.documentElement.classList.add('light-theme');
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark-theme');
+    function isDarkActive() {
+      if (document.documentElement.classList.contains('dark-theme')) return true;
+      if (document.documentElement.classList.contains('light-theme')) return false;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function updateThemeUI() {
+      var dark = isDarkActive();
+      var icon = document.getElementById('theme-icon');
+      var btn = document.getElementById('theme-toggle');
+      if (icon) icon.textContent = dark ? '☀️' : '🌙';
+      if (btn) {
+        var label = dark ? 'Switch to Light mode' : 'Switch to Dark mode';
+        btn.setAttribute('title', label);
+        btn.setAttribute('aria-label', label);
       }
+    }
+
+    function toggleTheme() {
+      var dark = isDarkActive();
+      if (dark) {
+        document.documentElement.classList.remove('dark-theme');
+        document.documentElement.classList.add('light-theme');
+        try { localStorage.setItem('piggii_theme', 'light'); } catch (e) {}
+      } else {
+        document.documentElement.classList.remove('light-theme');
+        document.documentElement.classList.add('dark-theme');
+        try { localStorage.setItem('piggii_theme', 'dark'); } catch (e) {}
+      }
+      updateThemeUI();
+    }
+
+    (function() {
+      try {
+        var saved = localStorage.getItem('piggii_theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark-theme');
+        } else if (saved === 'light') {
+          document.documentElement.classList.add('light-theme');
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark-theme');
+        }
+      } catch (e) {}
     })();
+
+    document.addEventListener('DOMContentLoaded', updateThemeUI);
   </script>
   
   {% feed_meta %}
@@ -42,7 +78,7 @@
         <a href="{{ '/archive/' | relative_url }}" {% if page.url contains '/archive' %}class="active"{% endif %}>Archive</a>
         <a href="{{ '/about/' | relative_url }}" {% if page.url contains '/about' %}class="active"{% endif %}>About</a>
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle theme">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle theme" onclick="toggleTheme()">
           <span id="theme-icon">🌙</span>
         </button>
       </nav>
