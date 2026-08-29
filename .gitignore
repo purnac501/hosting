@@ -6,6 +6,8 @@ _site/
 vendor/
 
 # Environment / secrets (never commit real ones)
+node_modules/
+auth-worker/node_modules/
 auth-worker/.dev.vars
 auth-worker/.env
 .env
