@@ -1,7 +1,11 @@
 ---
 layout: default
 ---
-<div class="post">
+<div class="back-link-bar">
+  <a href="{{ '/' | relative_url }}">&laquo; Back to all posts</a>
+</div>
+
+<div class="post post-full-view">
   <h2>{{ page.title }}</h2>
   <p class="post-meta">
     Posted by <b>{{ page.author | default: site.author }}</b>
