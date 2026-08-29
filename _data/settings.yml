@@ -1,0 +1,28 @@
+# ============================================================
+# Site settings - editable through the CMS under "Site Settings".
+# Everything here shows up in the sidebar / header.
+# ============================================================
+
+# Scrolling text in the header
+tagline: >-
+  welcome to my corner of the web ~ updated whenever i feel like
+  it ~ best viewed at 800x600
+
+# The "About this blog" box in the sidebar
+sidebar_about: >-
+  this is my personal web site. i post about stuff i'm doing, stuff
+  i'm playing and whatever else. that's it. that's the blog.
+
+# The "Links" box in the sidebar. Full URLs (https://...) or site
+# paths (/archive/) both work.
+links:
+  - title: post archive
+    url: /archive/
+  - title: RSS feed
+    url: /feed.xml
+  - title: neal.fun
+    url: https://neal.fun
+  - title: neocities
+    url: https://neocities.org
+  - title: wikipedia
+    url: https://www.wikipedia.org

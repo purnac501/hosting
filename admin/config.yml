@@ -1,0 +1,139 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# ==================================================================
+# Sveltia CMS configuration
+#
+# OWNER: two values below must be replaced with your real ones
+# (both are explained step by step in HANDOFF.md):
+#
+#   1. repo:     OWNER/REPOSITORY   (e.g. "piggii/homepage")
+#   2. base_url: your Cloudflare Worker URL from the Sveltia CMS
+#                Authenticator, e.g. "https://sveltia-cms-auth.<SUBDOMAIN>.workers.dev"
+#
+# ==================================================================
+
+backend:
+  name: github
+  repo: OWNER/REPOSITORY                                # ← REPLACE with "your-github-username/repository-name"
+  branch: main
+  base_url: https://REPLACE-WITH-AUTH-WORKER.workers.dev # ← REPLACE with your deployed Worker URL (no /callback)
+  auth_methods: [oauth]                                 # production login = GitHub OAuth only
+
+# Images uploaded through the CMS are committed to assets/uploads/
+# and served from the site. admin/index.html adjusts the public path
+# at runtime so this works both on a custom domain and on a project
+# site under https://OWNER.github.io/REPOSITORY/.
+media_folder: /assets/uploads
+public_folder: /assets/uploads
+
+# Use the browser's local timezone for {{year}}/{{month}}/{{day}} in
+# post file names, so a late-night post isn't dated the next day (UTC).
+slug:
+  timezone: local
+
+site_url: https://OWNER.github.io/REPOSITORY            # ← REPLACE with the final public site URL (optional, enables the "View site" link)
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    description: "Blog posts. Each post becomes a Markdown file and the public site rebuilds automatically."
+    folder: _posts
+    # Jekyll requires post files to be named YYYY-MM-DD-title.md
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} - {{date | date('YYYY-MM-DD')}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: Unpublished
+        field: published
+        pattern: false
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD HH:mm:ss ZZ"
+        default: "{{now}}"
+      - label: Body
+        name: body
+        widget: markdown
+        hint: "Markdown. Emoticon codes become smilies: :) :( :D :P ;) B) x_x :s :'( :lol: :mad: :oops: :rolleyes: :idea: :?:"
+      - label: Author
+        name: author
+        widget: string
+        default: "piggii"
+        required: false
+      - label: Mood
+        name: mood
+        widget: string
+        required: false
+        hint: "Optional. e.g. tired, hyper, nostalgic"
+      - label: Currently listening to
+        name: listening
+        widget: string
+        required: false
+        hint: "Optional. Song currently on repeat while writing"
+      - label: Excerpt
+        name: excerpt
+        widget: text
+        required: false
+        hint: "Optional short summary shown on the home page. Leave empty to use the first paragraph."
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+      - label: Published
+        name: published
+        widget: boolean
+        default: true
+        required: false
+        hint: "Uncheck to hide the post from the site (Jekyll skips 'published: false' posts)."
+
+  - name: settings
+    label: Site Settings
+    label_singular: Setting
+    description: "Sidebar and header content. Changes appear on the whole site after it rebuilds."
+    files:
+      - name: settings
+        label: Sidebar & tagline
+        file: _data/settings.yml
+        fields:
+          - label: Header tagline
+            name: tagline
+            widget: text
+            hint: "The scrolling text at the top of every page."
+          - label: Sidebar - About this blog
+            name: sidebar_about
+            widget: text
+            hint: "Short text shown in the 'About this blog' sidebar box."
+          - label: Sidebar links
+            name: links
+            widget: list
+            required: false
+            fields:
+              - label: Title
+                name: title
+                widget: string
+              - label: URL
+                name: url
+                widget: string
+                hint: "Full URL (https://...) or site path (/archive/)"
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    description: "Standalone pages of the site."
+    files:
+      - name: about
+        label: About page
+        file: about.md
+        fields:
+          - label: Title
+            name: title
+            widget: string
+          - label: Body
+            name: body
+            widget: markdown
+            hint: "Markdown. Emoticon codes become smilies too."

@@ -1,0 +1,83 @@
+# ============================================================
+# Site settings - piggii's personal blog
+#
+# OWNER: the only values you normally need to touch here are
+# `baseurl` and `url`. See HANDOFF.md for when and how.
+# ============================================================
+
+title: piggii's home page
+description: >-
+  piggii's personal corner of the web. A blog about whatever
+  I feel like writing about.
+author: piggii
+lang: en
+email: # optional - used by jekyll-feed only if set
+
+# ------------------------------------------------------------------
+# PROJECT PAGES ONLY: if the site lives at
+# https://OWNER.github.io/REPOSITORY/ then set baseurl to
+# "/REPOSITORY" (with the leading slash, no trailing slash).
+# If the site is on a custom domain (https://example.com/) or is a
+# user/organization site (https://OWNER.github.io/) leave it "".
+# ------------------------------------------------------------------
+baseurl: ""
+
+# Used to build absolute URLs (RSS feed links, og:metadata).
+# Set to your final public URL, e.g. "https://OWNER.github.io/REPOSITORY"
+# or "https://example.com" (no trailing slash). Leave "" for local dev.
+url: ""
+
+# Post URLs: /2026/08/28/post-title/
+permalink: /:year/:month/:day/:title/
+
+# Posts render full-width (no sidebar); other pages keep the sidebar
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      wide: true
+      author: piggii
+
+markdown: kramdown
+kramdown:
+  # Allow raw HTML (<img>, <marquee> etc.) inside Markdown posts
+  parse_block_html: false
+
+# jekyll-feed generates /feed.xml. Both plugins are whitelisted on
+# GitHub Pages, so no custom build is needed.
+plugins:
+  - jekyll-feed
+
+feed:
+  tags: true
+
+# Show this many posts on the home page
+recent_posts: 10
+
+# ------------------------------------------------------------------
+# OPTIONAL: real site visit tracking via GoatCounter
+# (https://www.goatcounter.com - free for non-commercial sites,
+# privacy-friendly, no cookies). Leave "" to disable entirely; the
+# sidebar counter stays a this-browser-only counter either way.
+# To enable: register at goatcounter.com, then put your site code
+# here. If your dashboard URL is https://EXAMPLE.goatcounter.com
+# then set goatcounter_code: "EXAMPLE".
+# ------------------------------------------------------------------
+goatcounter_code: ""
+
+# Theme colors are in style.css. There is nothing theme-related here
+# on purpose - this site is plain HTML and CSS.
+
+# Files that should not end up on the public site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - HANDOFF.md
+  - LICENSE
+  - auth-worker/
+  - vendor/
+  - .gitignore
+  - .bundle

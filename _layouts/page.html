@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<div class="post">
+  <h2>{{ page.title }}</h2>
+  {% if page.date %}
+  <p class="post-meta"><a href="{{ page.url | relative_url }}">#</a></p>
+  {% endif %}
+  <div class="post-body">
+    {% capture emote_source %}{{ content }}{% endcapture %}
+    {% include emoticons.html text=emote_source %}
+  </div>
+</div>

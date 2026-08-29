@@ -1,0 +1,8 @@
+# Copy this file to .dev.vars for LOCAL development of the Worker only
+# (npx wrangler dev). Never commit the real .dev.vars file.
+# In production you set these as Worker secrets instead - see HANDOFF.md.
+
+GITHUB_CLIENT_ID=your_github_oauth_app_client_id
+GITHUB_CLIENT_SECRET=your_github_oauth_app_client_secret
+# Optional, strongly recommended in production:
+# ALLOWED_DOMAINS=example.com

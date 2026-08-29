@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>piggii admin</title>
+  <!-- Installable on a phone: "Add to Home Screen" turns /admin/
+       into a fullscreen writing app. -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#4a3728">
+  <link rel="icon" href="../assets/sm_50.gif">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="piggii admin">
+</head>
+<body>
+  <!-- Sveltia CMS. Docs: https://sveltiacms.app/en/docs/intro -->
+  <!-- Manual init lets us fix the media path per environment (see below). -->
+  <script>window.CMS_MANUAL_INIT = true;</script>
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  <script>
+    (function () {
+      // On a custom domain the admin lives at  /admin/index.html
+      // On a project Pages site it lives at /REPOSITORY/admin/index.html
+      // Sveltia inserts uploaded media as root-absolute paths, so the
+      // public_folder must include the repository base when there is one.
+      // This computes it from the address bar: no per-site config needed.
+      var path = location.pathname.replace(/admin\/(index\.html)?$/, '');
+      var isRepoBase = /^\/.+\/$/.test(path); // e.g. "/repo-name/"
+      CMS.init({
+        config: {
+          public_folder: isRepoBase
+            ? path.replace(/\/$/, '') + '/assets/uploads'
+            : '/assets/uploads'
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

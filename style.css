@@ -1,0 +1,628 @@
+/* === RESET & BASE === */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 14px;
+  color: #333;
+  background-color: #cfc3a1;
+  /* Phones: stop iOS auto-inflating text, kill the gray tap flash */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(74, 55, 40, 0.15);
+}
+
+/* === LAYOUT === */
+#container {
+  width: 780px;
+  margin: 20px auto;
+  background: #f5f0e1;
+  border: 2px solid #b8a88a;
+  border-top: none;
+  box-shadow: 4px 4px 0 #8b7d64;
+}
+
+/* === HEADER === */
+#header {
+  background: #e8dcc8;
+  border-bottom: 3px solid #b8a88a;
+  padding: 25px 25px 15px;
+  text-align: center;
+}
+
+#header h1 {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 30px;
+  color: #4a3728;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 #d4c9a8;
+}
+
+#header .highlight {
+  color: #c0392b;
+  font-style: italic;
+}
+
+#tagline {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #7a6a52;
+  font-style: italic;
+}
+
+/* === NAV === */
+#nav {
+  background: #4a3728;
+  padding: 8px 20px;
+  text-align: center;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 13px;
+  border-bottom: 2px solid #b8a88a;
+}
+
+#nav a {
+  color: #f5f0e1;
+  text-decoration: none;
+  padding: 0 8px;
+  font-weight: bold;
+  /* Comfortable tap targets on touch screens */
+  touch-action: manipulation;
+}
+
+#nav a:hover {
+  color: #e8b84a;
+  text-decoration: underline;
+}
+
+/* === CONTENT === */
+#content-area {
+  padding: 15px 20px;
+}
+
+#main {
+  float: left;
+  width: 520px;
+}
+
+/* Full-width mode: posts and other pages without the sidebar */
+#content-area.nosidebar #main {
+  float: none;
+  width: auto;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+#sidebar {
+  float: right;
+  width: 200px;
+}
+
+
+
+/* === POSTS === */
+.post {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #b8a88a;
+}
+
+.post h2 {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 20px;
+  color: #4a3728;
+  margin-bottom: 4px;
+}
+
+.post-meta {
+  font-size: 11px;
+  color: #8b7d64;
+  margin-bottom: 12px;
+  border-bottom: 1px dotted #d4c9a8;
+  padding-bottom: 6px;
+}
+
+.post-meta a {
+  color: #8b7d64;
+}
+
+.post p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.post ul {
+  margin: 8px 0 8px 25px;
+  line-height: 1.8;
+}
+
+.signature {
+  margin-top: 15px;
+  text-align: right;
+  font-style: italic;
+  color: #7a6a52;
+}
+
+.signature img {
+  vertical-align: middle;
+  margin-top: 4px;
+}
+
+.centered {
+  text-align: center;
+}
+
+/* === POST CONTENT: TABLES === */
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.post-body th {
+  background: #4a3728;
+  color: #f5f0e1;
+  padding: 6px 10px;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 12px;
+  text-align: left;
+}
+
+.post-body td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #d4c9a8;
+  vertical-align: top;
+}
+
+.post-body tr:nth-child(even) td {
+  background: #eee7d6;
+}
+
+/* === POST CONTENT: QUOTES === */
+.post-body blockquote {
+  margin-bottom: 18px;
+  padding: 10px 12px;
+  background: #eee7d6;
+  border-left: 4px solid #b8a88a;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* === POST CONTENT: CODE === */
+.post-body code {
+  background: #eee7d6;
+  border: 1px dotted #b8a88a;
+  padding: 0 3px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+}
+
+.post-body pre {
+  background: #eee7d6;
+  border: 1px solid #d4c9a8;
+  padding: 8px;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.post-body pre code {
+  border: none;
+  padding: 0;
+}
+
+/* === POST CONTENT: IMAGES === */
+.post-body img {
+  max-width: 100%;
+}
+
+/* === POST EXTRAS === */
+.post-now {
+  font-size: 12px;
+  color: #7a6a52;
+  font-style: italic;
+  background: #eee7d6;
+  border: 1px dotted #b8a88a;
+  padding: 5px 8px;
+  margin-bottom: 12px;
+}
+
+.post-tags {
+  font-size: 11px;
+  color: #8b7d64;
+}
+
+.post-tags .tag {
+  background: #e8dcc8;
+  border: 1px solid #b8a88a;
+  padding: 0 4px;
+  color: #4a3728;
+}
+
+.read-more {
+  font-size: 13px;
+}
+
+#post-nav {
+  font-size: 12px;
+  color: #8b7d64;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* === ARCHIVE === */
+.archive-year {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 18px;
+  color: #c0392b;
+  border-bottom: 2px solid #b8a88a;
+  margin: 15px 0 8px;
+}
+
+.archive-month {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 14px;
+  color: #4a3728;
+  margin: 10px 0 4px;
+}
+
+.archive-list {
+  margin: 4px 0 10px 25px;
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+.archive-list small {
+  color: #8b7d64;
+}
+
+/* === SIDEBAR === */
+.sidebox {
+  background: #eee7d6;
+  border: 1px solid #d4c9a8;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 12px;
+}
+
+.sidebox h3 {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 13px;
+  color: #4a3728;
+  border-bottom: 1px solid #d4c9a8;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.sidebox p {
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.sidebox ul {
+  margin-left: 15px;
+  line-height: 1.8;
+}
+
+.sidebox a {
+  color: #4a3728;
+}
+
+.sidebox a:hover {
+  color: #c0392b;
+}
+
+/* === PLAYER === */
+#player-controls {
+  text-align: center;
+  margin: 6px 0;
+}
+
+#player-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+#player-controls button:hover {
+  opacity: 0.7;
+}
+
+#player-controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+#player-track-name {
+  font-weight: bold;
+  font-size: 11px;
+  text-align: center;
+  margin: 4px 0 2px;
+  color: #4a3728;
+}
+
+#player-track-artist {
+  font-size: 10px;
+  text-align: center;
+  margin: 0 0 6px;
+  color: #7a6a52;
+}
+
+#player-progress {
+  width: 100%;
+  height: 4px;
+  background: #d4c9a8;
+  cursor: pointer;
+  margin: 4px 0;
+}
+
+#player-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #8b7d64;
+}
+
+.player-time {
+  font-size: 10px;
+  color: #8b7d64;
+  text-align: center;
+}
+
+.player-volume-wrap {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.player-volume-wrap input[type="range"] {
+  width: 100px;
+  vertical-align: middle;
+}
+
+/* === TRACK LIST === */
+#track-list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  font-size: 10px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+#track-list li {
+  padding: 2px 4px;
+  cursor: pointer;
+  border-bottom: 1px dotted #d4c9a8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#track-list li:hover {
+  background: #e8dcc8;
+}
+
+#track-list li.active {
+  background: #d4c9a8;
+  font-weight: bold;
+}
+
+/* === FOOTER === */
+#footer-nav {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#footer-nav a {
+  color: #8b7d64;
+  font-size: 12px;
+}
+
+#footer {
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 11px;
+  color: #7a6a52;
+}
+
+#footer hr {
+  border: none;
+  border-top: 3px double #b8a88a;
+  margin-bottom: 10px;
+}
+
+#footer p {
+  margin-bottom: 4px;
+}
+
+#footer img {
+  vertical-align: middle;
+  margin: 2px;
+}
+
+/* === ENTER GATE (splash screen) === */
+#enter-gate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: #cfc3a1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+#enter-gate.gate-leave {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#enter-gate .gate-box {
+  background: #f5f0e1;
+  border: 3px solid #4a3728;
+  box-shadow: 4px 4px 0 #8b7d64;
+  padding: 30px 40px;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  color: #4a3728;
+  max-width: 340px;
+}
+
+#enter-gate .gate-box img {
+  margin-bottom: 10px;
+}
+
+#enter-gate h2 {
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+#enter-gate .gate-enter {
+  font-size: 16px;
+  font-weight: bold;
+  color: #c0392b;
+  margin-bottom: 12px;
+}
+
+#enter-gate small {
+  color: #7a6a52;
+  font-family: Georgia, serif;
+}
+
+/* === BLINK (CSS version since <blink> is dead) === */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* === MISC === */
+hr {
+  border: none;
+  border-top: 2px dashed #b8a88a;
+  margin: 15px 0;
+}
+
+a {
+  color: #4a3728;
+}
+
+a:hover {
+  color: #c0392b;
+}
+
+/* === NAV ACTIVE STATE === */
+#nav a.active {
+  color: #e8b84a;
+  text-decoration: underline;
+}
+
+/* === FOOTER ADMIN LINK === */
+.admin-link {
+  margin-top: 8px;
+}
+
+.admin-link a {
+  color: #b8a88a;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.admin-link a:hover {
+  color: #c0392b;
+  text-decoration: underline;
+}
+
+/* === POST CONTENT: EMOTES === */
+.post-body img.emote,
+.post img.emote {
+  display: inline;
+  vertical-align: middle;
+  border: none;
+  margin: 0 1px;
+}
+
+/* === SMALL SCREENS ===
+   Stack the sidebar below the content, keep the page width fluid,
+   and enlarge touch targets (fingers, not mouse pointers). */
+@media (max-width: 800px) {
+  #container {
+    width: auto;
+    margin: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: none;
+  }
+
+  #header {
+    padding: 18px 14px 12px;
+  }
+
+  #header h1 {
+    font-size: 21px;
+    letter-spacing: 1px;
+  }
+
+  #nav {
+    padding: 4px 8px;
+    line-height: 2.4;
+  }
+
+  #nav a {
+    padding: 6px 8px;
+  }
+
+  #content-area {
+    padding: 12px 12px;
+  }
+
+  #main {
+    float: none;
+    width: auto;
+  }
+
+  .post h2 {
+    font-size: 18px;
+  }
+
+  #sidebar {
+    float: none;
+    width: auto;
+  }
+
+  /* Music player: big thumbs-friendly buttons and wider slider */
+  #player-controls button {
+    padding: 10px;
+  }
+
+  #player-controls button img {
+    width: 28px;
+    height: 28px;
+  }
+
+  #track-list li {
+    padding: 8px 6px;
+  }
+
+  .player-volume-wrap input[type="range"] {
+    width: 150px;
+    height: 28px;
+  }
+
+  #footer img[width="50"] {
+    width: 40px;
+    height: 40px;
+  }
+}

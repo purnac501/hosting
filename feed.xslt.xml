@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom">
+  <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+  <xsl:template match="/">
+    <html>
+      <head>
+        <title>RSS Feed - <xsl:value-of select="atom:feed/atom:title"/></title>
+        <style>
+          body { font-family: Georgia, "Times New Roman", serif; background: #d4c9a8; color: #333; margin: 0; padding: 20px; }
+          .box { max-width: 640px; margin: 0 auto; background: #f5f0e1; border: 2px solid #b8a88a; box-shadow: 4px 4px 0 #8b7d64; padding: 20px 25px; }
+          h1 { font-family: "Trebuchet MS", Arial, sans-serif; color: #4a3728; font-size: 22px; margin: 0 0 4px; }
+          .hl { color: #c0392b; font-style: italic; }
+          p { line-height: 1.6; font-size: 14px; }
+          .meta { font-size: 11px; color: #8b7d64; border-bottom: 1px dotted #d4c9a8; padding-bottom: 10px; margin-bottom: 10px; }
+          code { background: #eee7d6; border: 1px dotted #b8a88a; padding: 1px 4px; font-family: "Courier New", monospace; }
+          ul { line-height: 1.8; font-size: 13px; margin-left: 25px; }
+          a { color: #4a3728; } a:hover { color: #c0392b; }
+          .note { font-size: 11px; color: #7a6a52; font-style: italic; }
+        </style>
+      </head>
+      <body>
+        <div class="box">
+          <h1><span class="hl">RSS</span> feed for <xsl:value-of select="atom:feed/atom:title"/></h1>
+          <div class="meta">last updated <xsl:value-of select="substring(atom:feed/atom:updated, 1, 10)"/></div>
+          <p>this is the <b>Atom/RSS feed</b> of this web site. it is not meant to be read with your eyes.</p>
+          <p>paste this page's address (<code><xsl:value-of select="atom:feed/atom:link[rel='self']/@href"/></code>) into a feed reader (e.g. Feedly, Thunderbird, FreshRSS, NetNewsWire) and it will tell you whenever a new post shows up here.</p>
+          <p><b>Latest posts:</b></p>
+          <ul>
+            <xsl:for-each select="atom:feed/atom:entry[position() &lt;= 10]">
+              <li>
+                <a><xsl:attribute name="href"><xsl:value-of select="atom:link/@href"/></xsl:attribute><xsl:value-of select="atom:title"/></a>
+                (<xsl:value-of select="substring(atom:published, 1, 10)"/>)
+              </li>
+            </xsl:for-each>
+          </ul>
+          <p class="note">if your reader shows this page instead of the raw XML, that is normal - the feed data is still underneath.</p>
+        </div>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>

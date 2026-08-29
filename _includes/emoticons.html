@@ -1,0 +1,36 @@
+{%- comment -%}
+Turns forum-style emoticons in post text into the site's smilies.
+Usage: {% capture t %}{{ content }}{% endcapture %}{% include emoticons.html text=t %}
+{%- endcomment -%}
+{%- assign emote_text = include.text -%}
+{%- capture e_smile -%}<img class="emote" src="{{ 'assets/sm_50.gif' | relative_url }}" width="16" height="16" alt=":)" title=":)">{%- endcapture -%}
+{%- capture e_grin -%}<img class="emote" src="{{ 'assets/sm_242.gif' | relative_url }}" width="16" height="16" alt=":D" title=":D">{%- endcapture -%}
+{%- capture e_sad -%}<img class="emote" src="{{ 'assets/sm_52.gif' | relative_url }}" width="16" height="16" alt=":(" title=":(">{%- endcapture -%}
+{%- capture e_cry -%}<img class="emote" src="{{ 'assets/sm_55.gif' | relative_url }}" width="16" height="16" alt=":'(" title=":'(">{%- endcapture -%}
+{%- capture e_sweat -%}<img class="emote" src="{{ 'assets/sm_56.gif' | relative_url }}" width="16" height="16" alt=":s" title=":s">{%- endcapture -%}
+{%- capture e_dead -%}<img class="emote" src="{{ 'assets/sm_57.gif' | relative_url }}" width="16" height="16" alt="x_x" title="x_x">{%- endcapture -%}
+{%- capture e_tongue -%}<img class="emote" src="{{ 'assets/sm_58.gif' | relative_url }}" width="16" height="16" alt=":P" title=":P">{%- endcapture -%}
+{%- capture e_wink -%}<img class="emote" src="{{ 'assets/sm_59.gif' | relative_url }}" width="16" height="16" alt=";)" title=";)">{%- endcapture -%}
+{%- capture e_cool -%}<img class="emote" src="{{ 'assets/sm_icon_cool.gif' | relative_url }}" width="16" height="16" alt="B)" title="B)">{%- endcapture -%}
+{%- capture e_lol -%}<img class="emote" src="{{ 'assets/sm_icon_lol.gif' | relative_url }}" width="16" height="16" alt=":lol:" title=":lol:">{%- endcapture -%}
+{%- capture e_mad -%}<img class="emote" src="{{ 'assets/sm_icon_mad.gif' | relative_url }}" width="16" height="16" alt=":mad:" title=":mad:">{%- endcapture -%}
+{%- capture e_red -%}<img class="emote" src="{{ 'assets/sm_icon_redface.gif' | relative_url }}" width="16" height="16" alt=":oops:" title=":oops:">{%- endcapture -%}
+{%- capture e_roll -%}<img class="emote" src="{{ 'assets/sm_icon_rolleyes.gif' | relative_url }}" width="16" height="16" alt=":rolleyes:" title=":rolleyes:">{%- endcapture -%}
+{%- capture e_idea -%}<img class="emote" src="{{ 'assets/sm_icon_idea.gif' | relative_url }}" width="16" height="16" alt=":idea:" title=":idea:">{%- endcapture -%}
+{%- capture e_quest -%}<img class="emote" src="{{ 'assets/sm_75.gif' | relative_url }}" width="16" height="16" alt=":?:" title=":?">{%- endcapture -%}
+{%- assign emote_text = emote_text | replace: ":'(", e_cry -%}
+{%- assign emote_text = emote_text | replace: ":(", e_sad -%}
+{%- assign emote_text = emote_text | replace: ":)", e_smile -%}
+{%- assign emote_text = emote_text | replace: ":D", e_grin -%}
+{%- assign emote_text = emote_text | replace: ":P", e_tongue -%}
+{%- assign emote_text = emote_text | replace: ";)", e_wink -%}
+{%- assign emote_text = emote_text | replace: "B)", e_cool -%}
+{%- assign emote_text = emote_text | replace: "x_x", e_dead -%}
+{%- assign emote_text = emote_text | replace: ":s", e_sweat -%}
+{%- assign emote_text = emote_text | replace: ":lol:", e_lol -%}
+{%- assign emote_text = emote_text | replace: ":mad:", e_mad -%}
+{%- assign emote_text = emote_text | replace: ":oops:", e_red -%}
+{%- assign emote_text = emote_text | replace: ":rolleyes:", e_roll -%}
+{%- assign emote_text = emote_text | replace: ":idea:", e_idea -%}
+{%- assign emote_text = emote_text | replace: ":?:", e_quest -%}
+{{ emote_text }}

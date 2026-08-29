@@ -1,0 +1,21 @@
+# Cloudflare Worker configuration for the Sveltia CMS Authenticator.
+# This is the OFFICIAL worker code from https://github.com/sveltia/sveltia-cms-auth
+# (MIT license, see LICENSE.txt), vendored here so the owner can deploy it
+# without touching another repository.
+
+name = "sveltia-cms-auth"
+main = "src/index.js"
+compatibility_date = "2023-03-24"
+
+# Secrets are NOT set in this file. After `wrangler login`, run:
+#   npx wrangler secret put GITHUB_CLIENT_ID
+#   npx wrangler secret put GITHUB_CLIENT_SECRET
+# ...or add them in the Cloudflare dashboard: Workers & Pages >
+# sveltia-cms-auth > Settings > Variables and Secrets (mark the secret as Secret).
+#
+# Optional but strongly recommended: restrict which sites may use this worker
+# (anti-abuse + security). Add your final site hostname(s):
+#   npx wrangler secret put ALLOWED_DOMAINS
+#   e.g. "example.com" or "OWNER.github.io, example.com"
+#
+# For local development, copy .dev.vars.example to .dev.vars and fill it in.

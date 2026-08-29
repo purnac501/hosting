@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="{{ site.lang }}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ site.description | strip_newlines }}">
+  <meta name="generator" content="Jekyll + GitHub Pages (and Notepad)">
+  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <link rel="stylesheet" type="text/css" href="{{ '/style.css' | relative_url }}">
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/sm_50.gif' | relative_url }}">
+  {%- comment -%} PWA: installable app, offline reads, phone-friendly chrome. {%- endcomment -%}
+  <link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+  <meta name="theme-color" content="#4a3728">
+  <link rel="apple-touch-icon" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="piggii">
+  {%- comment -%} Base path for JavaScript (music player, etc). Works on project Pages and custom domains. {%- endcomment -%}
+  <meta name="site-base" content="{{ '' | relative_url }}">
+  {% feed_meta %}
+</head>
+<body>
+
+{%- comment -%} guns.lol-style splash: the click also unlocks autoplay. {%- endcomment -%}
+<div id="enter-gate" role="button" aria-label="Enter site (starts music)">
+  <div class="gate-box">
+    <img src="{{ '/assets/sm_50.gif' | relative_url }}" width="64" height="64" alt="">
+    <h2>welcome to piggii's home page</h2>
+    <p class="gate-enter blink">&raquo; click to enter &laquo;</p>
+    <small>music will start at a reasonable volume, promise</small>
+  </div>
+</div>
+
+<div id="container">
+
+  <div id="header">
+    <h1><span class="highlight">piggii</span>'s home page</h1>
+    <div id="tagline"><marquee scrollamount="3">{{ site.data.settings.tagline | default: "welcome to my corner of the web" | strip_newlines | strip }}</marquee></div>
+  </div>
+
+  <div id="nav">
+    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a> |
+    <a href="{{ '/archive/' | relative_url }}" {% if page.url == '/archive.html' %}class="active"{% endif %}>Archive</a> |
+    <a href="{{ '/about/' | relative_url }}" {% if page.url == '/about/' %}class="active"{% endif %}>About</a> |
+    <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+  </div>
+
+  <div id="content-area" {% if page.wide %}class="nosidebar"{% endif %}>
+
+    <div id="main">
+      {{ content }}
+    </div>
+
+    {% unless page.wide %}
+    <div id="sidebar">
+
+      <div class="sidebox">
+        <h3>About this blog <img src="{{ '/assets/sm_icon_idea.gif' | relative_url }}" width="16" height="16" alt=":idea:" style="vertical-align: middle;"></h3>
+        <p>{{ site.data.settings.sidebar_about | default: "this is my personal web site." }}</p>
+        <p><a href="{{ '/about/' | relative_url }}">more about me &raquo;</a></p>
+      </div>
+
+      <div class="sidebox">
+        <h3>Recent posts</h3>
+        <ul>
+          {% for post in site.posts limit:5 %}
+          <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="sidebox">
+        <h3>Now Playing <img src="{{ '/assets/icon_music.png' | relative_url }}" width="16" height="16" alt="" style="vertical-align: middle;"></h3>
+        <div id="player-controls">
+          <button id="btn-prev" title="Previous track"><img src="{{ '/assets/icon_prev.png' | relative_url }}" width="24" height="24" alt="&lt;&lt;"></button>
+          <button id="btn-play" title="Play/Pause"><img src="{{ '/assets/icon_play.png' | relative_url }}" width="24" height="24" alt="Play"></button>
+          <button id="btn-next" title="Next track"><img src="{{ '/assets/icon_next.png' | relative_url }}" width="24" height="24" alt="&gt;&gt;"></button>
+        </div>
+        <div id="player-track-name">Select a track</div>
+        <div id="player-track-artist"></div>
+        <div id="player-progress"><div id="player-progress-bar"></div></div>
+        <div class="player-time"><span id="player-time-current">0:00</span> / <span id="player-time-total">0:00</span></div>
+        <div class="player-volume-wrap">
+          <img src="{{ '/assets/icon_speaker.png' | relative_url }}" width="14" height="14" alt="Vol" style="vertical-align: middle;">
+          <input type="range" id="player-volume" min="0" max="1" step="0.05" value="0.15">
+        </div>
+        <ul id="track-list"></ul>
+      </div>
+
+      <div class="sidebox">
+        <h3>Site Stats</h3>
+        <p>Local time: <span id="live-clock"></span></p>
+        <p>Your visits <small>(this browser only)</small>: <span id="visitor-count">000042</span></p>
+        <p>Last updated: <br><span id="last-updated">{{ site.time | date: "%B %-d, %Y" }}</span></p>
+      </div>
+
+      <div class="sidebox">
+        <h3>My Web Badges</h3>
+        <p>
+          <img src="{{ '/assets/under-construction.gif' | relative_url }}" alt="Under Construction" width="88" height="31">
+          <img src="{{ '/assets/built-with-notepad.gif' | relative_url }}" alt="Built with Microsoft Notepad" width="88" height="31">
+          <img src="{{ '/assets/linux-powered.gif' | relative_url }}" alt="Linux powered" width="88" height="31">
+          <img src="{{ '/assets/netscape-now.gif' | relative_url }}" alt="Netscape Now!" width="88" height="31">
+        </p>
+      </div>
+
+      {% if site.data.settings.links %}
+      <div class="sidebox">
+        <h3>Links</h3>
+        <ul>
+          {% for link in site.data.settings.links %}
+          <li><a href="{{ link.url | relative_url }}" {% if link.url contains '://' %}target="_blank"{% endif %}>{% unless link.url contains '://' %}<img src="{{ '/assets/icon_magnifier.png' | relative_url }}" width="14" height="14" alt="" style="vertical-align: middle;"> {% endunless %}{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+    </div>
+    {% endunless %}
+
+    <div style="clear: both;"></div>
+  </div>
+
+  <div id="footer">
+    <p><img src="{{ '/assets/dance1.gif' | relative_url }}" width="50" height="50" alt="" style="vertical-align: middle;"> <img src="{{ '/assets/dance2.gif' | relative_url }}" width="50" height="50" alt="" style="vertical-align: middle;"> <img src="{{ '/assets/dance3.gif' | relative_url }}" width="50" height="50" alt="" style="vertical-align: middle;"> <img src="{{ '/assets/dance4.gif' | relative_url }}" width="50" height="50" alt="" style="vertical-align: middle;"> <img src="{{ '/assets/dance5.gif' | relative_url }}" width="50" height="50" alt="" style="vertical-align: middle;"> <img src="{{ '/assets/dance6.gif' | relative_url }}" width="50" height="50" alt="" style="vertical-align: middle;"></p>
+    <hr>
+    <p>&copy; 2026 piggii &middot; all posts are my opinions, obviously</p>
+    <p>Best viewed in <b>800x600</b> &middot; <b>Internet Explorer 5.0+</b> or <b>Netscape 6</b></p>
+    <p>Powered by <b>Notepad</b>, <b>Jekyll</b> &amp; <b>raw HTML</b></p>
+    <p>
+      <img src="{{ '/assets/best-viewed-with.gif' | relative_url }}" alt="This page is best viewed with:" width="88" height="31">
+      <img src="{{ '/assets/internet-explorer.gif' | relative_url }}" alt="Microsoft Internet Explorer" width="88" height="31">
+    </p>
+    <p class="admin-link"><a href="{{ '/admin/' | relative_url }}">admin</a></p>
+  </div>
+
+</div>
+
+<script src="{{ '/script.js' | relative_url }}"></script>
+{% if site.goatcounter_code %}
+<!-- Real visit tracking (privacy-friendly, no cookies). See _config.yml. -->
+<script data-goatcounter="https://{{ site.goatcounter_code }}.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+{% endif %}
+</body>
+</html>

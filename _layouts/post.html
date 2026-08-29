@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<div class="post">
+  <h2>{{ page.title }}</h2>
+  <p class="post-meta">
+    Posted by <b>{{ page.author | default: site.author }}</b>
+    on {{ page.date | date: "%B %-d, %Y" }}
+    | <a href="{{ page.url | relative_url }}">#</a>
+  </p>
+
+  {% if page.mood or page.listening %}
+  <p class="post-now">
+    {% if page.mood %}mood: <b>{{ page.mood }}</b>{% endif %}
+    {% if page.mood and page.listening %} &nbsp;|&nbsp; {% endif %}
+    {% if page.listening %}currently listening to: <b>{{ page.listening }}</b>{% endif %}
+  </p>
+  {% endif %}
+
+  <div class="post-body">
+    {% capture emote_source %}{{ content }}{% endcapture %}
+    {% include emoticons.html text=emote_source %}
+  </div>
+
+  {% if page.tags and page.tags.size > 0 %}
+  <p class="post-tags">filed under:
+    {% for tag in page.tags %}<span class="tag">{{ tag }}</span>{% unless forloop.last %}, {% endunless %}{% endfor %}
+  </p>
+  {% endif %}
+
+  <div class="signature">
+    <p>~ {{ page.author | default: site.author }}</p>
+  </div>
+</div>
+
+<div id="post-nav">
+  {% if page.next %}newer: &laquo; <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>{% endif %}
+  {% if page.previous %}<br>older: &raquo; <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>{% endif %}
+  <br>
+  <a href="{{ '/archive/' | relative_url }}">back to the archive</a>
+</div>
