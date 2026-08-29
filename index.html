@@ -2,58 +2,55 @@
 layout: default
 ---
 
-<div class="posts-rows-header">
-  <h2># latest-posts</h2>
-  <span class="posts-count">{{ site.posts | size }} entries</span>
-</div>
-
-<div class="posts-rows">
+<div class="thread-list">
 {% for post in site.posts limit: site.recent_posts %}
-  <div class="post-row-card">
-    <a href="{{ post.url | relative_url }}" class="post-row-thumb-link" aria-label="{{ post.title }}">
-      <div class="post-row-thumb">
-        {% if post.thumbnail %}
-          <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" loading="lazy">
-        {% else %}
-          <div class="post-row-thumb-placeholder">
-            <img src="{{ '/assets/icon_notepad.png' | relative_url }}" alt="" width="32" height="32">
-          </div>
-        {% endif %}
-      </div>
-    </a>
-    
-    <div class="post-row-content">
-      <div class="post-row-meta">
-        <span class="post-row-author">@{{ post.author | default: site.author }}</span>
-        <span class="post-row-date">{{ post.date | date: "%B %-d, %Y" }}</span>
-        {% if post.mood %}
-          <span class="post-row-mood">mood: <b>{{ post.mood }}</b></span>
-        {% endif %}
-      </div>
-      
-      <h3 class="post-row-title">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      </h3>
+  <div class="thread-row">
+    <div class="post-header-line">
+      <span class="subject">{{ post.title }}</span>
+      <span class="name">{{ post.author | default: "Anonymous" }}</span>
+      <span class="dateTime">{{ post.date | date: "%m/%d/%y(%a)%H:%M:%S" }}</span>
+      <span class="postNum"><a href="{{ post.url | relative_url }}">No.{{ forloop.index | plus: 104200 }}</a></span>
+      [<a href="{{ post.url | relative_url }}" class="reply-link">Reply / View Post</a>]
+    </div>
 
-      {% if post.excerpt %}
-        <p class="post-row-excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
-      {% endif %}
+    {% if post.thumbnail %}
+    <div class="file-text">
+      File: <a href="{{ post.thumbnail | relative_url }}" target="_blank">{{ post.thumbnail | split: '/' | last }}</a> (click thumbnail to open post)
+    </div>
+    {% endif %}
 
-      <div class="post-row-footer">
-        {% if post.tags and post.tags.size > 0 %}
-        <div class="post-row-tags">
-          {% for tag in post.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
-        </div>
+    <div class="thread-body-wrap">
+      <div class="thread-thumb">
+        <a href="{{ post.url | relative_url }}">
+          {% if post.thumbnail %}
+            <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" loading="lazy">
+          {% else %}
+            <div class="thumb-placeholder">
+              <img src="{{ '/assets/built-with-notepad.gif' | relative_url }}" alt="No Image">
+            </div>
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="thread-message">
+        {% if post.mood or post.listening %}
+        <p class="greentext">&gt;mood: {{ post.mood | default: "chill" }}{% if post.listening %} | listening: {{ post.listening }}{% endif %}</p>
         {% endif %}
-        <a href="{{ post.url | relative_url }}" class="post-row-btn">Read full blog &raquo;</a>
+
+        {% if post.excerpt %}
+        <p>{{ post.excerpt | strip_html | truncate: 220 }}</p>
+        {% endif %}
+
+        <p class="post-read-link">
+          <a href="{{ post.url | relative_url }}">&gt;&gt; Read full post &gt;&gt;</a>
+        </p>
       </div>
     </div>
+    <hr class="thread-separator">
   </div>
 {% endfor %}
 </div>
 
-<p class="centered archive-link">
-  <img src="{{ '/assets/sm_59.gif' | relative_url }}" width="16" height="16" alt=";)" style="vertical-align: middle;">
-  older stuff lives in the <a href="{{ '/archive/' | relative_url }}">archive</a> |
-  <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-</p>
+<div class="board-nav-bottom">
+  [ <a href="{{ '/' | relative_url }}">home</a> / <a href="{{ '/archive/' | relative_url }}">archive</a> / <a href="{{ '/about/' | relative_url }}">about</a> / <a href="{{ '/feed.xml' | relative_url }}">rss</a> ]
+</div>

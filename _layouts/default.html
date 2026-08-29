@@ -35,16 +35,13 @@
 
 <div id="container">
 
-  <div id="header">
-    <h1><span class="highlight">piggii</span>'s home page</h1>
-    <div id="tagline"><marquee scrollamount="3">{{ site.data.settings.tagline | default: "welcome to my corner of the web" | strip_newlines | strip }}</marquee></div>
+  <div id="board-nav-top">
+    [ <a href="{{ '/' | relative_url }}">home</a> / <a href="{{ '/archive/' | relative_url }}">archive</a> / <a href="{{ '/about/' | relative_url }}">about</a> / <a href="{{ '/feed.xml' | relative_url }}">rss</a> / <a href="{{ '/admin/' | relative_url }}">admin</a> ]
   </div>
 
-  <div id="nav">
-    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a> |
-    <a href="{{ '/archive/' | relative_url }}" {% if page.url == '/archive.html' %}class="active"{% endif %}>Archive</a> |
-    <a href="{{ '/about/' | relative_url }}" {% if page.url == '/about/' %}class="active"{% endif %}>About</a> |
-    <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+  <div id="header">
+    <div class="board-title">/blog/ - piggii</div>
+    <div class="board-subtitle">{{ site.data.settings.tagline | default: "welcome to my corner of the web" | strip_newlines | strip }}</div>
   </div>
 
   <div id="content-area" {% if page.wide %}class="nosidebar"{% endif %}>
