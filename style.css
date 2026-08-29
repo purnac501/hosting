@@ -1,8 +1,8 @@
 /* ============================================================
-   Clean, Modern Personal Blog Theme (with Light & Dark Mode)
+   Clean, Modern Personal Blog Theme (Light & Dark Mode Support)
    ============================================================ */
 
-/* === CSS VARIABLES === */
+/* === DEFAULT: LIGHT MODE VARIABLES === */
 :root {
   --bg: #ffffff;
   --bg-subtle: #fafafa;
@@ -31,6 +31,38 @@
   --author-card-border: #e2e8f0;
 }
 
+/* === SYSTEM DARK MODE (WHEN NO MANUAL TOGGLE IS SAVED) === */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    --bg: #121214;
+    --bg-subtle: #18181b;
+    --surface: #1e1e22;
+    --border: #2e2e33;
+    --border-subtle: #27272a;
+    --text-primary: #f4f4f5;
+    --text-secondary: #d4d4d8;
+    --text-muted: #a1a1aa;
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
+    --card-hover-bg: #18181b;
+    --code-bg: #1f1f23;
+    --code-text: #f4f4f5;
+    --pre-bg: #09090b;
+    --pre-text: #e4e4e7;
+    --quote-bg: #18181b;
+    --quote-border: #60a5fa;
+    --quote-text: #a1a1aa;
+    --tag-bg: #27272a;
+    --tag-text: #d4d4d8;
+    --tag-accent-text: #60a5fa;
+    --btn-bg: #27272a;
+    --btn-hover-bg: #3f3f46;
+    --author-card-bg: #18181b;
+    --author-card-border: #2e2e33;
+  }
+}
+
+/* === EXPLICIT DARK MODE CLASS === */
 html.dark-theme {
   --bg: #121214;
   --bg-subtle: #18181b;
@@ -57,6 +89,35 @@ html.dark-theme {
   --btn-hover-bg: #3f3f46;
   --author-card-bg: #18181b;
   --author-card-border: #2e2e33;
+}
+
+/* === EXPLICIT LIGHT MODE CLASS === */
+html.light-theme {
+  --bg: #ffffff;
+  --bg-subtle: #fafafa;
+  --surface: #ffffff;
+  --border: #e4e4e7;
+  --border-subtle: #f4f4f5;
+  --text-primary: #09090b;
+  --text-secondary: #27272a;
+  --text-muted: #71717a;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --card-hover-bg: #fafafa;
+  --code-bg: #f4f4f5;
+  --code-text: #09090b;
+  --pre-bg: #18181b;
+  --pre-text: #f4f4f5;
+  --quote-bg: #f8fafc;
+  --quote-border: #2563eb;
+  --quote-text: #475569;
+  --tag-bg: #f4f4f5;
+  --tag-text: #52525b;
+  --tag-accent-text: #2563eb;
+  --btn-bg: #f4f4f5;
+  --btn-hover-bg: #e4e4e7;
+  --author-card-bg: #f8fafc;
+  --author-card-border: #e2e8f0;
 }
 
 /* === RESET & BASE === */
@@ -159,8 +220,8 @@ a:hover {
   background: var(--btn-bg);
   border: 1px solid var(--border);
   color: var(--text-primary);
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 6px;
   display: inline-flex;
   align-items: center;
@@ -169,13 +230,14 @@ a:hover {
   font-size: 15px;
   transition: all 0.15s ease;
   margin-left: 4px;
+  user-select: none;
 }
 
 .theme-toggle-btn:hover {
   background: var(--btn-hover-bg);
 }
 
-/* === MAIN CONTENT === */
+/* === MAIN CONTENT CONTAINER === */
 .site-main {
   flex: 1;
   width: 100%;

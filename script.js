@@ -311,29 +311,64 @@
   });
 
   // --- Service worker (PWA install + offline reads) ---
-  // Registered with a relative path so it works from a Pages
-  // project subdirectory too.
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     navigator.serviceWorker.register('sw.js').catch(function () {
       // No SW is fine (http:// local dev, old browsers).
     });
-  // --- Dark Mode Toggle ---
+  }
+
+  // --- Light / Dark Mode Toggle ---
   var themeToggleBtn = document.getElementById('theme-toggle');
   var themeIcon = document.getElementById('theme-icon');
 
+  function isDarkActive() {
+    if (document.documentElement.classList.contains('dark-theme')) return true;
+    if (document.documentElement.classList.contains('light-theme')) return false;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
   function updateThemeUI() {
-    var isDark = document.documentElement.classList.contains('dark-theme');
+    var dark = isDarkActive();
     if (themeIcon) {
-      themeIcon.textContent = isDark ? '☀️' : '🌙';
+      themeIcon.textContent = dark ? '☀️' : '🌙';
+    }
+    if (themeToggleBtn) {
+      var label = dark ? 'Switch to Light mode' : 'Switch to Dark mode';
+      themeToggleBtn.setAttribute('title', label);
+      themeToggleBtn.setAttribute('aria-label', label);
     }
   }
 
   if (themeToggleBtn) {
     updateThemeUI();
     themeToggleBtn.addEventListener('click', function () {
-      var isDark = document.documentElement.classList.toggle('dark-theme');
-      localStorage.setItem('piggii_theme', isDark ? 'dark' : 'light');
+      var dark = isDarkActive();
+      if (dark) {
+        document.documentElement.classList.remove('dark-theme');
+        document.documentElement.classList.add('light-theme');
+        localStorage.setItem('piggii_theme', 'light');
+      } else {
+        document.documentElement.classList.remove('light-theme');
+        document.documentElement.classList.add('dark-theme');
+        localStorage.setItem('piggii_theme', 'dark');
+      }
       updateThemeUI();
+    });
+  }
+
+  // Listen for system theme changes if user has no manual override
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      if (!localStorage.getItem('piggii_theme')) {
+        if (e.matches) {
+          document.documentElement.classList.add('dark-theme');
+          document.documentElement.classList.remove('light-theme');
+        } else {
+          document.documentElement.classList.remove('dark-theme');
+          document.documentElement.classList.remove('light-theme');
+        }
+        updateThemeUI();
+      }
     });
   }
 
