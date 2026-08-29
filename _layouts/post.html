@@ -1,47 +1,69 @@
 ---
 layout: default
 ---
-<div class="board-nav-top">
-  [ <a href="{{ '/' | relative_url }}">&laquo; Return to board</a> / <a href="{{ '/archive/' | relative_url }}">Archive</a> ]
-</div>
 
-<div class="thread-op-post">
-  <div class="post-header-line">
-    <span class="subject">{{ page.title }}</span>
-    <span class="name">{{ page.author | default: "Anonymous" }}</span>
-    <span class="dateTime">{{ page.date | date: "%m/%d/%y(%a)%H:%M:%S" }}</span>
-    <span class="postNum"><a href="{{ page.url | relative_url }}">No.104200</a></span>
+<article class="post-article">
+  <div class="post-back-link">
+    <a href="{{ '/' | relative_url }}">&larr; Back to all posts</a>
   </div>
+
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+      <span class="meta-separator">&middot;</span>
+      <span class="post-author">By {{ page.author | default: site.author | default: 'piggii' }}</span>
+      {% if page.mood %}
+      <span class="meta-separator">&middot;</span>
+      <span class="post-mood">mood: <i>{{ page.mood }}</i></span>
+      {% endif %}
+    </div>
+
+    {% if page.tags and page.tags.size > 0 %}
+    <div class="post-tags-list">
+      {% for tag in page.tags %}
+        <span class="tag-badge">#{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
 
   {% if page.thumbnail %}
-  <div class="file-text">
-    File: <a href="{{ page.thumbnail | relative_url }}" target="_blank">{{ page.thumbnail | split: '/' | last }}</a> (click image to view full)
-  </div>
-  <div class="op-thumb">
-    <a href="{{ page.thumbnail | relative_url }}" target="_blank">
-      <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.title }}">
-    </a>
+  <div class="post-cover">
+    <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.title }}">
   </div>
   {% endif %}
 
-  {% if page.mood or page.listening %}
-  <p class="greentext">&gt;mood: {{ page.mood | default: "chill" }}{% if page.listening %} | listening: {{ page.listening }}{% endif %}</p>
-  {% endif %}
-
-  <div class="post-body">
+  <div class="post-content">
     {% capture emote_source %}{{ content }}{% endcapture %}
     {% include emoticons.html text=emote_source %}
   </div>
 
-  {% if page.tags and page.tags.size > 0 %}
-  <p class="post-tags">&gt;tags:
-    {% for tag in page.tags %}<span class="tag">#{{ tag }}</span>{% unless forloop.last %} {% endunless %}{% endfor %}
-  </p>
-  {% endif %}
+  <footer class="post-footer">
+    <div class="author-card">
+      <div class="author-info">
+        <h3>Written by {{ page.author | default: 'piggii' }}</h3>
+        <p>Thanks for reading! Feel free to check out the archive for more posts.</p>
+      </div>
+    </div>
 
-  <div style="clear: both;"></div>
-</div>
+    <nav class="post-pagination">
+      {% if page.previous %}
+      <a href="{{ page.previous.url | relative_url }}" class="prev-post">
+        <span class="nav-label">&larr; Older</span>
+        <span class="nav-title">{{ page.previous.title }}</span>
+      </a>
+      {% else %}
+      <div></div>
+      {% endif %}
 
-<div class="board-nav-bottom">
-  [ <a href="{{ '/' | relative_url }}">&laquo; Return to board</a> / <a href="{{ '/archive/' | relative_url }}">Archive</a> ]
-</div>
+      {% if page.next %}
+      <a href="{{ page.next.url | relative_url }}" class="next-post">
+        <span class="nav-label">Newer &rarr;</span>
+        <span class="nav-title">{{ page.next.title }}</span>
+      </a>
+      {% endif %}
+    </nav>
+  </footer>
+</article>

@@ -2,55 +2,49 @@
 layout: default
 ---
 
-<div class="thread-list">
-{% for post in site.posts limit: site.recent_posts %}
-  <div class="thread-row">
-    <div class="post-header-line">
-      <span class="subject">{{ post.title }}</span>
-      <span class="name">{{ post.author | default: "Anonymous" }}</span>
-      <span class="dateTime">{{ post.date | date: "%m/%d/%y(%a)%H:%M:%S" }}</span>
-      <span class="postNum"><a href="{{ post.url | relative_url }}">No.{{ forloop.index | plus: 104200 }}</a></span>
-      [<a href="{{ post.url | relative_url }}" class="reply-link">Reply / View Post</a>]
-    </div>
+<div class="blog-feed">
+  <div class="feed-header">
+    <h2>Recent Articles</h2>
+    <span class="posts-count">{{ site.posts | size }} posts</span>
+  </div>
 
-    {% if post.thumbnail %}
-    <div class="file-text">
-      File: <a href="{{ post.thumbnail | relative_url }}" target="_blank">{{ post.thumbnail | split: '/' | last }}</a> (click thumbnail to open post)
-    </div>
-    {% endif %}
-
-    <div class="thread-body-wrap">
-      <div class="thread-thumb">
-        <a href="{{ post.url | relative_url }}">
-          {% if post.thumbnail %}
-            <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" loading="lazy">
-          {% else %}
-            <div class="thumb-placeholder">
-              <img src="{{ '/assets/built-with-notepad.gif' | relative_url }}" alt="No Image">
-            </div>
+  <div class="posts-list">
+    {% for post in site.posts %}
+    <article class="post-card">
+      <div class="post-card-body">
+        <div class="post-card-meta">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+          {% if post.tags and post.tags.size > 0 %}
+          <span class="meta-dot">&middot;</span>
+          <span class="post-card-tag">#{{ post.tags.first }}</span>
           {% endif %}
-        </a>
-      </div>
+        </div>
 
-      <div class="thread-message">
-        {% if post.mood or post.listening %}
-        <p class="greentext">&gt;mood: {{ post.mood | default: "chill" }}{% if post.listening %} | listening: {{ post.listening }}{% endif %}</p>
-        {% endif %}
+        <h3 class="post-card-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h3>
 
         {% if post.excerpt %}
-        <p>{{ post.excerpt | strip_html | truncate: 220 }}</p>
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
         {% endif %}
 
-        <p class="post-read-link">
-          <a href="{{ post.url | relative_url }}">&gt;&gt; Read full post &gt;&gt;</a>
-        </p>
+        <div class="post-card-footer">
+          <a href="{{ post.url | relative_url }}" class="read-more-link">Read article &rarr;</a>
+        </div>
       </div>
-    </div>
-    <hr class="thread-separator">
-  </div>
-{% endfor %}
-</div>
 
-<div class="board-nav-bottom">
-  [ <a href="{{ '/' | relative_url }}">home</a> / <a href="{{ '/archive/' | relative_url }}">archive</a> / <a href="{{ '/about/' | relative_url }}">about</a> / <a href="{{ '/feed.xml' | relative_url }}">rss</a> ]
+      {% if post.thumbnail %}
+      <div class="post-card-thumb">
+        <a href="{{ post.url | relative_url }}" aria-label="{{ post.title }}">
+          <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" loading="lazy">
+        </a>
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+
+  <div class="feed-footer">
+    <a href="{{ '/archive/' | relative_url }}" class="archive-btn">View All Posts in Archive &rarr;</a>
+  </div>
 </div>
