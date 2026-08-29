@@ -4,6 +4,7 @@ _site/
 .jekyll-metadata
 .bundle/
 vendor/
+_preview/
 
 # Environment / secrets (never commit real ones)
 node_modules/
