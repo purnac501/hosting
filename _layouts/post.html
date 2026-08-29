@@ -17,6 +17,12 @@ layout: default
   </p>
   {% endif %}
 
+  {% if page.thumbnail %}
+  <div class="post-thumbnail">
+    <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.title }}">
+  </div>
+  {% endif %}
+
   <div class="post-body">
     {% capture emote_source %}{{ content }}{% endcapture %}
     {% include emoticons.html text=emote_source %}

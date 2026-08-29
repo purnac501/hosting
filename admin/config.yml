@@ -56,6 +56,11 @@ collections:
         widget: datetime
         format: "YYYY-MM-DD HH:mm:ss ZZ"
         default: "{{now}}"
+      - label: Thumbnail
+        name: thumbnail
+        widget: image
+        required: false
+        hint: "Optional cover / thumbnail image for this blog post."
       - label: Body
         name: body
         widget: markdown

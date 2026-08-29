@@ -20,6 +20,14 @@ layout: default
   </p>
   {% endif %}
 
+  {% if post.thumbnail %}
+  <div class="post-thumbnail">
+    <a href="{{ post.url | relative_url }}">
+      <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}">
+    </a>
+  </div>
+  {% endif %}
+
   {% if post_length > 400 %}
   <div class="post-body">
     {% capture emote_source %}{{ post.excerpt }}{% endcapture %}
