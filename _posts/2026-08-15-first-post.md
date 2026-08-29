@@ -1,10 +1,10 @@
 ---
 title: first post
 date: 2026-08-15 21:04:00 +0200
-thumbnail: https://wildnet.org/news/penguins-charming-widespread-and-important/
+thumbnail: /hosting/assets/uploads/what-do-penguins-do-for-the-environment_Adelie-penguins_Susan-McConnell-1024x683.jpg
 author: piggii
-mood: nostalgic
-listening: True my heart - Nursery Rhyme
+mood: ''
+listening: ''
 excerpt: ''
 tags:
   - meta
@@ -12,7 +12,7 @@ published: true
 layout: post
 ---
 
-i made a website. hand-rolled HTML, a marquee tagline, dancing gifs in the footer, a music player nobody asked for.
+i made a website.
 
 it's `index.html` all the way down and i love it. B)
 
