@@ -1,12 +1,15 @@
 ---
-layout: post
-title: "first post"
+title: first post
 date: 2026-08-15 21:04:00 +0200
+thumbnail: https://wildnet.org/news/penguins-charming-widespread-and-important/
 author: piggii
 mood: nostalgic
-listening: "True my heart - Nursery Rhyme"
+listening: True my heart - Nursery Rhyme
+excerpt: ''
 tags:
-- meta
+  - meta
+published: true
+layout: post
 ---
 
 i made a website. hand-rolled HTML, a marquee tagline, dancing gifs in the footer, a music player nobody asked for.
