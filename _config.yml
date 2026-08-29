@@ -25,7 +25,7 @@ baseurl: "/hosting"
 # Used to build absolute URLs (RSS feed links, og:metadata).
 # Set to your final public URL, e.g. "https://OWNER.github.io/REPOSITORY"
 # or "https://example.com" (no trailing slash). Leave "" for local dev.
-url: "https://purnac501.github.io/hosting"
+url: "https://purnac501.github.io"
 
 # Post URLs: /2026/08/28/post-title/
 permalink: /:year/:month/:day/:title/
