@@ -34,7 +34,11 @@ layout: default
 
   {% if page.thumbnail %}
   <div class="post-cover">
-    <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.title }}">
+    {% if page.thumbnail contains '://' or page.thumbnail contains site.baseurl %}
+      <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
+    {% else %}
+      <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.title }}">
+    {% endif %}
   </div>
   {% endif %}
 

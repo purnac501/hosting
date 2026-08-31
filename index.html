@@ -39,7 +39,11 @@ layout: default
       {% if post.thumbnail %}
       <div class="post-card-thumb">
         <a href="{{ post.url | relative_url }}" aria-label="{{ post.title }}">
-          <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" loading="lazy">
+          {% if post.thumbnail contains '://' or post.thumbnail contains site.baseurl %}
+            <img src="{{ post.thumbnail }}" alt="{{ post.title }}" loading="lazy">
+          {% else %}
+            <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" loading="lazy">
+          {% endif %}
         </a>
       </div>
       {% endif %}
