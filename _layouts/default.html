@@ -14,52 +14,17 @@
   <meta name="site-base" content="{{ '' | relative_url }}">
   
   <script>
-    function isDarkActive() {
-      if (document.documentElement.classList.contains('dark-theme')) return true;
-      if (document.documentElement.classList.contains('light-theme')) return false;
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-
-    function updateThemeUI() {
-      var dark = isDarkActive();
-      var icon = document.getElementById('theme-icon');
-      var btn = document.getElementById('theme-toggle');
-      if (icon) icon.textContent = dark ? '☀️' : '🌙';
-      if (btn) {
-        var label = dark ? 'Switch to Light mode' : 'Switch to Dark mode';
-        btn.setAttribute('title', label);
-        btn.setAttribute('aria-label', label);
-      }
-    }
-
-    function toggleTheme() {
-      var dark = isDarkActive();
-      if (dark) {
-        document.documentElement.classList.remove('dark-theme');
-        document.documentElement.classList.add('light-theme');
-        try { localStorage.setItem('piggii_theme', 'light'); } catch (e) {}
-      } else {
-        document.documentElement.classList.remove('light-theme');
-        document.documentElement.classList.add('dark-theme');
-        try { localStorage.setItem('piggii_theme', 'dark'); } catch (e) {}
-      }
-      updateThemeUI();
-    }
-
     (function() {
       try {
         var saved = localStorage.getItem('piggii_theme');
-        if (saved === 'dark') {
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
           document.documentElement.classList.add('dark-theme');
         } else if (saved === 'light') {
           document.documentElement.classList.add('light-theme');
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.documentElement.classList.add('dark-theme');
         }
       } catch (e) {}
     })();
-
-    document.addEventListener('DOMContentLoaded', updateThemeUI);
   </script>
   
   {% feed_meta %}
@@ -78,8 +43,14 @@
         <a href="{{ '/archive/' | relative_url }}" {% if page.url contains '/archive' %}class="active"{% endif %}>Archive</a>
         <a href="{{ '/about/' | relative_url }}" {% if page.url contains '/about' %}class="active"{% endif %}>About</a>
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle theme" onclick="toggleTheme()">
-          <span id="theme-icon">🌙</span>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+          </svg>
+          <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
         </button>
       </nav>
     </div>
@@ -93,19 +64,35 @@
 
   <footer class="site-footer">
     <div class="footer-container">
-      <div class="footer-top">
-        <div class="mini-player">
-          <div class="player-info">
-            <span class="player-icon">🎵</span>
-            <span id="player-track-name">Music Player</span>
+      <div class="footer-player">
+        <div class="player-left">
+          <span class="player-icon" aria-hidden="true">
+            <svg class="lucide lucide-music" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </span>
+          <div class="player-track-meta">
+            <span id="player-track-name" class="track-title">Music Player</span>
             <span id="player-track-artist" class="track-artist"></span>
           </div>
-          <div class="player-actions">
-            <button id="btn-prev" title="Previous" aria-label="Previous track">&lt;</button>
-            <button id="btn-play" title="Play/Pause" aria-label="Play">&gt;</button>
-            <button id="btn-next" title="Next" aria-label="Next track">&gt;&gt;</button>
+        </div>
+
+        <div class="player-controls">
+          <button id="btn-prev" class="player-btn" title="Previous track" aria-label="Previous track">
+            <svg class="lucide lucide-skip-back" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" x2="5" y1="19" y2="5"/></svg>
+          </button>
+          <button id="btn-play" class="player-btn player-btn-primary" title="Play/Pause" aria-label="Play">
+            <svg class="lucide lucide-play icon-play" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+            <svg class="lucide lucide-pause icon-pause" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>
+          </button>
+          <button id="btn-next" class="player-btn" title="Next track" aria-label="Next track">
+            <svg class="lucide lucide-skip-forward" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></svg>
+          </button>
+        </div>
+
+        <div class="player-progress-area">
+          <div id="player-progress" class="player-progress-track">
+            <div id="player-progress-bar" class="player-progress-fill"></div>
           </div>
-          <div id="player-progress"><div id="player-progress-bar"></div></div>
+          <span class="player-time"><span id="player-time-current">0:00</span> / <span id="player-time-total">0:00</span></span>
         </div>
       </div>
 

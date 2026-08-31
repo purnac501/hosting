@@ -1,201 +1,192 @@
-# piggii's home page
+# piggii · Personal Blog
 
-A personal blog with an early-2000s personal-homepage look: narrow centered
-layout, beige/brown palette, marquee tagline, sidebar widgets, music player,
-dancing GIFs. Under the hood it is a boring, reliable static site:
+A fast, lightweight, and modern personal blog built on Jekyll and GitHub Pages with full Sveltia CMS support, built-in RSS, dark/light theme switching, and a mini background music player.
 
-- **Jekyll** builds the site (versions pinned to what GitHub Pages runs)
-- **GitHub Pages** hosts it for free
-- **Sveltia CMS** gives the owner a graphical editor at `/admin/`
-- **GitHub OAuth + a tiny Cloudflare Worker** authenticates the CMS
-- Posts live in the repository as **Markdown files**
+---
 
-No frameworks, no build pipeline beyond Jekyll, no databases, no JavaScript
-framework on the public site.
+## Features
 
-## Architecture
+- **Clean Typography & Layout**: Fast, readable personal blog design with comfortable spacing and responsive mobile layout.
+- **Dual Theme Support**: Light and Dark modes with automatic OS system preference detection and an instant, persistent toggle button.
+- **Sveltia CMS Integration**: Full browser-based content management system at `/admin/` with GitHub OAuth login, markdown editing, tag management, and thumbnail uploads.
+- **Valid RSS / Atom Feed**: Standards-compliant `/feed.xml` with styled in-browser XSLT preview (`/feed.xslt.xml`).
+- **Subtle Music Player**: Persistent background music player in the footer with Lucide SVG playback controls and progress scrubber.
+- **Zero Heavy Frameworks**: Pure HTML, CSS, and vanilla JavaScript. No tracker scripts, no cookies, no heavy framework dependencies.
 
+---
+
+## Architecture Overview
+
+```text
+Site Owner ──▶ /admin/ (Sveltia CMS in browser)
+                 │
+                 ▼ GitHub OAuth Code
+   Cloudflare Worker (auth-worker/)
+                 │
+                 ▼ Exchanged GitHub Access Token
+   GitHub Repository (commits markdown posts to _posts/ and images to assets/uploads/)
+                 │
+                 ▼ Push event to main branch
+   GitHub Pages (Builds & deploys Jekyll site automatically)
+                 │
+                 ▼
+   Live Blog (https://purnac501.github.io/hosting/)
 ```
-Owner ──▶ /admin/ (Sveltia CMS, a static SPA)
-           │  GitHub OAuth
-           ▼
-     sveltia-cms-auth (Cloudflare Worker, vendored in auth-worker/)
-           │  exchanges OAuth code for a GitHub token
-           ▼
-     GitHub repository (Markdown posts in _posts/, images in assets/uploads/)
-           │  commits push to main
-           ▼
-     GitHub Pages rebuilds the Jekyll site
-           ▼
-     public blog updated
-```
 
-## Directory structure
+---
 
-```
-├── _config.yml          # Jekyll settings (site name, baseurl, url)
-├── _data/settings.yml   # editable site content (tagline, sidebar, links)
-├── _layouts/            # default / post / page templates
-├── _includes/emoticons.html  # forum-code → smilie replacement
-├── _posts/              # blog posts (Markdown + YAML front matter)
-├── _site/               # build output (not committed)
+## Project Structure
+
+```text
+├── _config.yml          # Jekyll configuration (site title, baseurl, url, permalinks)
+├── _data/
+│   └── settings.yml     # Editable site metadata (header tagline, links)
+├── _includes/
+│   └── emoticons.html   # Emoticon formatting helper
+├── _layouts/
+│   ├── default.html     # Base HTML wrapper, header nav, theme toggle, and footer player
+│   └── post.html        # Single article reading layout with metadata, cover image, and pagination
+├── _posts/              # Markdown blog posts (YYYY-MM-DD-title.md)
 ├── admin/
-│   ├── index.html       # Sveltia CMS entry point
-│   └── config.yml       # CMS config (repo, OAuth worker URL)
-├── archive.html         # archive page (posts grouped by year/month)
-├── about.md             # about page
-├── index.html           # home page (recent posts)
-├── 404.html
-├── feed.xslt.xml        # stylesheet so /feed.xml is readable in browsers
-├── style.css            # the entire visual identity
-├── script.js            # clock, music player, visitor counter
-├── assets/              # images, smilies, music; uploads land in assets/uploads/
-├── auth-worker/         # vendored official Sveltia CMS Authenticator (Cloudflare Worker)
-├── Gemfile              # local Jekyll versions matching GitHub Pages
-├── HANDOFF.md           # non-technical setup checklist for the site owner
-└── README.md
+│   ├── index.html       # Sveltia CMS loader
+│   └── config.yml       # CMS collection, field, and backend configuration
+├── assets/
+│   ├── tracks/          # MP3 audio tracks for background music player
+│   ├── uploads/         # Uploaded images and post thumbnails
+│   └── ...              # Icons, badges, and avatars
+├── auth-worker/         # Cloudflare Worker for Sveltia GitHub OAuth authentication
+├── archive.html         # Post archive grouped by publication year
+├── about.md             # About page
+├── index.html           # Home page feed with recent posts
+├── feed.xml             # Atom / RSS feed source template
+├── feed.xslt.xml        # XSLT stylesheet for beautiful in-browser RSS viewing
+├── style.css            # Stylesheet with light/dark CSS custom properties
+├── script.js            # Audio player controls, theme toggle, and service worker registration
+├── manifest.webmanifest # PWA web application manifest
+├── sw.js                # Service worker for offline caching
+└── README.md            # Project documentation
 ```
 
-## Local development
+---
 
-Requires Ruby and Bundler (`gem install bundler`).
+## Local Development & Preview
 
-```sh
+### Option A: Using Jekyll (Ruby)
+
+If you have Ruby and Bundler installed:
+
+```bash
+# Install dependencies
 bundle install
+
+# Run Jekyll server
 bundle exec jekyll serve
+
+# Open in your browser
+http://localhost:4000/hosting/
 ```
 
-Then open http://localhost:4000/.
+### Option B: Using Python Static Server
 
-The Gemfile pins Jekyll to the major/minor version GitHub Pages currently
-builds with (see https://pages.github.com/versions/), so local output matches
-the published site.
+If you are developing without a full Ruby environment, you can run the included Python preview builder:
 
-### Admin locally, without any accounts
+```bash
+# Generate preview files
+python3 scratch/render_site.py
 
-Sveltia has a local workflow that edits the repository files directly in the
-browser (no GitHub login, no server):
+# Start static server
+python3 -m http.server 4000 --directory _preview
 
-1. `bundle exec jekyll serve`
-2. Open http://localhost:4000/admin/index.html in a Chromium browser
-   (Chrome/Edge/Brave - it uses the File System Access API)
-3. Click **Work with Local Repository** and select this project folder
-4. Edit posts; changes are written to local files. Commit with git yourself.
+# Open in browser
+http://localhost:4000/hosting/
+```
 
-The production config (`backend:` with GitHub OAuth) stays untouched.
+---
 
-## Blog post format
+## Content & Publishing Workflow
 
-Posts are `_posts/YYYY-MM-DD-slug.md`:
+### 1. Publishing via Sveltia CMS (Web Interface)
+
+1. Navigate to `https://purnac501.github.io/hosting/admin/` (or `http://localhost:4000/hosting/admin/` locally).
+2. Click **Login with GitHub** to authenticate via OAuth.
+3. Click **New Post** to create a post, or click an existing post to edit.
+4. Fill in:
+   - **Title**: Post heading.
+   - **Date**: Publication timestamp.
+   - **Thumbnail**: Featured cover image (stored in `assets/uploads/`).
+   - **Mood / Listening**: Optional status fields.
+   - **Tags**: Categories / topic tags.
+   - **Body**: Markdown content.
+5. Click **Publish**. Sveltia CMS commits the markdown file directly to your GitHub repository, triggering a GitHub Pages deployment.
+
+### 2. Publishing via Git & Markdown Files
+
+You can create or edit markdown files directly in `_posts/`:
 
 ```markdown
 ---
 layout: post
-title: "my post title"
-date: 2026-08-28 14:30:00 +0200
+title: "My New Article"
+date: 2026-08-31 12:00:00 -0700
 author: piggii
-mood: tired                      # optional
-listening: "some song"           # optional
-excerpt: "short teaser text"     # optional, shown on the home page
-tags: [web, music]               # optional
-published: true                  # set false to hide the post
+thumbnail: /assets/uploads/photo.jpg
+mood: "creative"
+tags:
+  - tech
+  - life
+published: true
 ---
 
-Post body in **Markdown**. Raw HTML works too.
+Your content goes here in standard **Markdown**!
 ```
 
-Jekyll turns the file name into the date-based URL
-(`/2026/08/28/my-post-title/`). The CMS generates file names with the
-`{{year}}-{{month}}-{{day}}-{{slug}}` pattern automatically.
+Commit and push to publish:
 
-### Emoticons
-
-Post bodies (and the About page) convert classic forum codes into the site's
-16x16 smilies automatically (`_includes/emoticons.html`):
-
-```
-:)  :(  :D  :P  ;)  B)  x_x  :s  :'(
-:lol:  :mad:  :oops:  :rolleyes:  :idea:  :?:
+```bash
+git add .
+git commit -m "add new article"
+git push
 ```
 
-Codes inside `` `code` `` spans are safe from longer codes; plain-text codes
-anywhere else in the body are replaced, including inside code blocks, so avoid
- emoticon-looking strings in fenced code samples.
+---
 
-### Editable site content
+## Configuration & Environment Variables
 
-The header tagline, the sidebar "About this blog" text, and the sidebar links
-live in `_data/settings.yml` and are editable in the CMS under
-**Site Settings**. The About page is editable under **Pages**. Posts render
-full-width (no sidebar); home, archive and about keep the sidebar.
+### 1. Site Configuration (`_config.yml`)
 
-### Badges
+- `title`: Site title displayed in browser tab and RSS.
+- `description`: Site meta description.
+- `baseurl`: `/hosting` for GitHub Pages project sites (`https://<user>.github.io/<repo>/`). Leave `""` for custom apex domains.
+- `url`: Public base URL (e.g. `https://purnac501.github.io`).
 
-The 88x31 badges (Under Construction, Built with Notepad, Linux powered,
-Netscape Now!, "best viewed with", IE) are authentic period badges taken from
-the 88x31 archive at http://cyber.dabamos.de/88x31/. Replace them with any
-other badge from that archive or similar collections if desired.
+### 2. Cloudflare OAuth Worker (`auth-worker/`)
 
-## URL handling / baseurl
+The Cloudflare Worker authenticates GitHub OAuth logins for Sveltia CMS.
 
-Everything in the templates uses Jekyll's `relative_url` filter, and the
-JavaScript reads the base path from `<meta name="site-base">`. This lets the
-same code run as:
+#### Required Worker Secrets:
 
-- a **project site**: `https://OWNER.github.io/REPOSITORY/`
-  - requires `baseurl: "/REPOSITORY"` in `_config.yml`
-- a **user site**: `https://OWNER.github.io/`
-- a **custom domain**: `https://example.com/`
-  - both use `baseurl: ""`
+| Secret Name | Description | Example |
+| :--- | :--- | :--- |
+| `GITHUB_CLIENT_ID` | OAuth App Client ID from GitHub Developer settings | `Ov23...` |
+| `GITHUB_CLIENT_SECRET` | OAuth App Client Secret from GitHub Developer settings | `40-character hash` |
+| `ALLOWED_DOMAINS` | Allowed origins that can request tokens | `purnac501.github.io,localhost` |
 
-Uploaded images get the same treatment: `admin/index.html` computes the
-`public_folder` from the browser path at runtime, so Sveltia inserts image
-paths that work in all cases.
+To deploy or update secrets:
 
-## Sveltia CMS
-
-Loaded from the UNPKG CDN (`https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js`),
-initialized manually in `admin/index.html`. Collection config: `admin/config.yml`.
-Docs: https://sveltiacms.app/en/docs/intro
-
-- backend: `github`, production login is **OAuth only**
-  (`auth_methods: [oauth]`) - GitHub does not support client-side PKCE, so the
-  authorization code flow through the Worker is the right setup
-- media: uploads go to `assets/uploads/`, inserted image paths respect the
-  site base path
-- commits made by Sveltia are signed and attributed to the logged-in user, so
-  they trigger normal GitHub Pages branch builds (no `GITHUB_TOKEN` problem)
-
-### Emergency fallback
-
-If the OAuth Worker is ever down, a PAT still works: temporarily change
-`auth_methods: [oauth]` to `auth_methods: [oauth, token]` in
-`admin/config.yml`, push, and use **Sign In with Token** (a fine-grained PAT
-with Contents read/write on the repo). Revert afterwards.
-
-## OAuth Worker (auth-worker/)
-
-`auth-worker/` vendors the official MIT-licensed
-[sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) Cloudflare
-Worker. It only handles the OAuth handshake; no content or media touches
-Cloudflare. See `auth-worker/README.md` for the three-command deployment.
-
-## GitHub Pages
-
-The intended deployment is the simplest supported option:
-
-- **Settings → Pages → Build and deployment → Source: "Deploy from a branch"**
-- Branch `main`, folder `/ (root)`
-- No custom GitHub Actions workflow; Jekyll is built by Pages itself with the
-  default, whitelisted plugins (`jekyll-feed` only here)
-
-Since Sveltia commits as the authenticated GitHub user, every "save" in the
-CMS is a normal push to `main`, which rebuilds the site.
-
-## Testing the built site
-
-```sh
-bundle exec jekyll build
-# _site/ contains the result; check it with any static server
-python3 -m http.server 8000 --directory _site
+```bash
+cd auth-worker
+npx wrangler secret put GITHUB_CLIENT_ID
+npx wrangler secret put GITHUB_CLIENT_SECRET
+npx wrangler secret put ALLOWED_DOMAINS
+npx wrangler deploy
 ```
+
+---
+
+## GitHub Pages Deployment
+
+1. On GitHub, go to **Settings → Pages**.
+2. Under **Build and deployment**:
+   - **Source**: `Deploy from a branch`
+   - **Branch**: `main` / folder `/(root)`
+3. Save. Every push to `main` builds and publishes the blog automatically.

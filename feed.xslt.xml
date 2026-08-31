@@ -6,7 +6,7 @@
       <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>RSS Feed &middot; <xsl:value-of select="atom:feed/atom:title"/></title>
+        <title>RSS Feed &#183; <xsl:value-of select="//*[local-name()='title'][1]"/></title>
         <style>
           :root {
             --bg: #ffffff;
@@ -50,7 +50,9 @@
             margin-bottom: 6px;
           }
           .back-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             margin-bottom: 16px;
             color: var(--muted);
             text-decoration: none;
@@ -108,27 +110,30 @@
       </head>
       <body>
         <div class="container">
-          <a href="/hosting/" class="back-link">&larr; Back to blog</a>
+          <a href="/hosting/" class="back-link">
+            <svg class="lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Back to blog</span>
+          </a>
           <div class="header">
-            <h1>RSS Feed &middot; <xsl:value-of select="atom:feed/atom:title"/></h1>
+            <h1>RSS Feed &#183; <xsl:value-of select="//*[local-name()='title'][1]"/></h1>
           </div>
           
           <div class="info-box">
-            <p><strong>This is an RSS / Atom feed.</strong> Subscribe by copying this URL into your favorite RSS reader (like NetNewsWire, Feedly, FreshRSS, Thunderbird, etc.):</p>
-            <p><code><xsl:value-of select="atom:feed/atom:link[@rel='self']/@href"/></code></p>
+            <p><strong>This is an RSS / Atom feed.</strong> Subscribe by copying this URL into your favorite RSS reader (such as NetNewsWire, Feedly, FreshRSS, Thunderbird, etc.):</p>
+            <p><code><xsl:value-of select="//*[local-name()='link'][@rel='self']/@href"/></code></p>
           </div>
 
-          <h2>Recent Articles in Feed</h2>
+          <h2>Recent Posts in Feed</h2>
           <ul class="post-list">
-            <xsl:for-each select="atom:feed/atom:entry">
+            <xsl:for-each select="//*[local-name()='entry']">
               <li class="post-item">
                 <a>
-                  <xsl:attribute name="href"><xsl:value-of select="atom:link/@href"/></xsl:attribute>
+                  <xsl:attribute name="href"><xsl:value-of select="*[local-name()='link']/@href"/></xsl:attribute>
                   <xsl:attribute name="class">post-title</xsl:attribute>
-                  <xsl:value-of select="atom:title"/>
+                  <xsl:value-of select="*[local-name()='title']"/>
                 </a>
                 <span class="post-date">
-                  <xsl:value-of select="substring(atom:published, 1, 10)"/>
+                  <xsl:value-of select="substring(*[local-name()='published'], 1, 10)"/>
                 </span>
               </li>
             </xsl:for-each>

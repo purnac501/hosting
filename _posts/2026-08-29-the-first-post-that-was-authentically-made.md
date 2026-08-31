@@ -6,7 +6,7 @@ mood: ''
 listening: ''
 excerpt: ''
 tags: []
-published: false
+published: true
 ---
 
 im currently in the process of navigating the tool im currently using for writing..

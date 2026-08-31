@@ -4,7 +4,10 @@ layout: default
 
 <article class="post-article">
   <div class="post-back-link">
-    <a href="{{ '/' | relative_url }}">&larr; Back to all posts</a>
+    <a href="{{ '/' | relative_url }}">
+      <svg class="lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      <span>Back to all posts</span>
+    </a>
   </div>
 
   <header class="post-header">
@@ -41,17 +44,13 @@ layout: default
   </div>
 
   <footer class="post-footer">
-    <div class="author-card">
-      <div class="author-info">
-        <h3>Written by {{ page.author | default: 'piggii' }}</h3>
-        <p>Thanks for reading! Feel free to check out the archive for more posts.</p>
-      </div>
-    </div>
-
     <nav class="post-pagination">
       {% if page.previous %}
       <a href="{{ page.previous.url | relative_url }}" class="prev-post">
-        <span class="nav-label">&larr; Older</span>
+        <span class="nav-label">
+          <svg class="lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          Older
+        </span>
         <span class="nav-title">{{ page.previous.title }}</span>
       </a>
       {% else %}
@@ -60,7 +59,10 @@ layout: default
 
       {% if page.next %}
       <a href="{{ page.next.url | relative_url }}" class="next-post">
-        <span class="nav-label">Newer &rarr;</span>
+        <span class="nav-label">
+          Newer
+          <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
         <span class="nav-title">{{ page.next.title }}</span>
       </a>
       {% endif %}
